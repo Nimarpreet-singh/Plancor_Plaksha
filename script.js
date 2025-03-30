@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Sample product list – each product has an image, price, caption (optional) and a list of classes (one is a color)
   const products = [
+    // Original products
     { id: 1, name: "Rustic Rice Husk Vase", price: "$29.99", image: "https://via.placeholder.com/200x150?text=Rice+Husk+Vase", classes: ["red", "vase"], description: "Handcrafted from upcycled rice husks with a beautiful natural finish." },
     { id: 2, name: "Modern Bamboo Lamp", price: "$49.99", image: "https://via.placeholder.com/200x150?text=Bamboo+Lamp", classes: ["blue", "lamp"], description: "Elegant lighting solution made from repurposed bamboo waste." },
     { id: 3, name: "Natural Wheat Straw Cushion", price: "$19.99", image: "https://via.placeholder.com/200x150?text=Wheat+Cushion", classes: ["white", "cushion"], description: "Comfortable cushion with filling made from agricultural wheat straw." },
@@ -25,7 +26,22 @@ document.addEventListener('DOMContentLoaded', function() {
     { id: 6, name: "Minimalist Corn Husk Lamp", price: "$34.99", image: "https://via.placeholder.com/200x150?text=Corn+Lamp", classes: ["white", "lamp"], description: "Sustainable lighting option created from dried corn husks." },
     { id: 7, name: "Red Sugarcane Chair", price: "$59.99", image: "https://via.placeholder.com/200x150?text=Sugarcane+Chair", classes: ["red", "chair"], description: "Durable chair made from compressed sugarcane fiber." },
     { id: 8, name: "Ocean Blue Coconut Rug", price: "$89.99", image: "https://via.placeholder.com/200x150?text=Coconut+Rug", classes: ["blue", "rug"], description: "Soft, durable rug woven from coconut fiber with natural dyes." },
-    { id: 9, name: "Ivory Bamboo Side Table", price: "$99.99", image: "https://via.placeholder.com/200x150?text=Bamboo+Table", classes: ["white", "table"], description: "Elegant side table crafted from sustainable bamboo." }
+    { id: 9, name: "Ivory Bamboo Side Table", price: "$99.99", image: "https://via.placeholder.com/200x150?text=Bamboo+Table", classes: ["white", "table"], description: "Elegant side table crafted from sustainable bamboo." },
+    
+    // New products for additional colors
+    { id: 10, name: "Lemon Seagrass Basket", price: "$32.99", image: "https://via.placeholder.com/200x150?text=Lemon+Basket", classes: ["lemon", "basket"], description: "Bright yellow basket woven from sustainable seagrass fibers." },
+    { id: 11, name: "Orange Jute Wall Hanging", price: "$27.99", image: "https://via.placeholder.com/200x150?text=Orange+Hanging", classes: ["orange", "art"], description: "Vibrant wall hanging made from hand-dyed jute rope." },
+    { id: 12, name: "Pink Lotus Fiber Bowl", price: "$19.99", image: "https://via.placeholder.com/200x150?text=Pink+Bowl", classes: ["pink", "bowl"], description: "Delicate bowl crafted from dried lotus stems with natural pink coloring." },
+    { id: 13, name: "Lavender Reed Diffuser", price: "$22.99", image: "https://via.placeholder.com/200x150?text=Lavender+Diffuser", classes: ["lavender", "decor"], description: "Aromatic diffuser made with sustainable reed stems and essential oils." },
+    { id: 14, name: "Light Blue Cotton Throw", price: "$45.99", image: "https://via.placeholder.com/200x150?text=Light+Blue+Throw", classes: ["light blue", "textile"], description: "Soft throw blanket woven from organic cotton with natural dyes." },
+    { id: 15, name: "Pastel Green Bamboo Planter", price: "$36.99", image: "https://via.placeholder.com/200x150?text=Pastel+Green+Planter", classes: ["pastel green", "planter"], description: "Eco-friendly planter made from bamboo fiber with subtle green finish." },
+    { id: 16, name: "Green Leaf Plate Set", price: "$29.99", image: "https://via.placeholder.com/200x150?text=Green+Plates", classes: ["green", "tableware"], description: "Biodegradable plates crafted from pressed palm leaves." },
+    { id: 17, name: "Pastel Yellow Corn Husk Wreath", price: "$39.99", image: "https://via.placeholder.com/200x150?text=Yellow+Wreath", classes: ["pastel yellow", "decor"], description: "Delicate wreath made from dried corn husks with a subtle yellow tint." },
+    { id: 18, name: "Peach Sisal Fiber Lampshade", price: "$24.99", image: "https://via.placeholder.com/200x150?text=Peach+Lampshade", classes: ["peach", "lighting"], description: "Warm-toned lampshade woven from sustainable sisal fibers." },
+    { id: 19, name: "Sea Green Algae Candles", price: "$18.99", image: "https://via.placeholder.com/200x150?text=Sea+Green+Candles", classes: ["sea green", "candle"], description: "Eco-friendly candles made with algae wax and natural colorants." },
+    { id: 20, name: "Brown Coffee Husk Ottoman", price: "$79.99", image: "https://via.placeholder.com/200x150?text=Brown+Ottoman", classes: ["brown", "furniture"], description: "Sturdy ottoman stuffed with upcycled coffee husks with natural brown finish." },
+    { id: 21, name: "Golden Wheat Straw Mirror", price: "$49.99", image: "https://via.placeholder.com/200x150?text=Golden+Mirror", classes: ["golden", "decor"], description: "Decorative mirror framed with golden-tinted wheat straw fibers." },
+    { id: 22, name: "Silver Flax Fiber Wall Art", price: "$59.99", image: "https://via.placeholder.com/200x150?text=Silver+Wall+Art", classes: ["silver", "art"], description: "Shimmering wall art created from naturally silvery flax fibers." }
   ];
   
   // ===== Scroll Effects =====
@@ -917,40 +933,40 @@ document.head.appendChild(style);
         });
       }
       
-      // Initialize theme toggle
-      document.addEventListener('DOMContentLoaded', function() {
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-          document.documentElement.setAttribute('data-theme', savedTheme);
-        }
+      // // Initialize theme toggle
+      // document.addEventListener('DOMContentLoaded', function() {
+      //   // Check for saved theme preference
+      //   const savedTheme = localStorage.getItem('theme');
+      //   if (savedTheme) {
+      //     document.documentElement.setAttribute('data-theme', savedTheme);
+      //   }
         
-        // Add theme toggle button to navbar if it doesn't exist
-        const navIcons = document.querySelector('.nav-icons');
-        if (navIcons && !document.querySelector('.theme-toggle')) {
-          const themeToggle = document.createElement('a');
-          themeToggle.href = '#';
-          themeToggle.className = 'theme-toggle';
-          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-          themeToggle.setAttribute('title', 'Toggle dark mode');
+      //   // Add theme toggle button to navbar if it doesn't exist
+      //   const navIcons = document.querySelector('.nav-icons');
+      //   if (navIcons && !document.querySelector('.theme-toggle')) {
+      //     const themeToggle = document.createElement('a');
+      //     themeToggle.href = '#';
+      //     themeToggle.className = 'theme-toggle';
+      //     themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+      //     themeToggle.setAttribute('title', 'Toggle dark mode');
           
-          themeToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      //     themeToggle.addEventListener('click', function(e) {
+      //       e.preventDefault();
+      //       const currentTheme = document.documentElement.getAttribute('data-theme');
+      //       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+      //       document.documentElement.setAttribute('data-theme', newTheme);
+      //       localStorage.setItem('theme', newTheme);
             
-            // Update icon
-            this.innerHTML = newTheme === 'dark' ? 
-              '<i class="fas fa-sun"></i>' : 
-              '<i class="fas fa-moon"></i>';
-          });
+      //       // Update icon
+      //       this.innerHTML = newTheme === 'dark' ? 
+      //         '<i class="fas fa-sun"></i>' : 
+      //         '<i class="fas fa-moon"></i>';
+      //     });
           
-          navIcons.appendChild(themeToggle);
-        }
-      });
+      //     navIcons.appendChild(themeToggle);
+      //   }
+      // });
       
       // Add preloading for images to improve performance
       document.addEventListener('DOMContentLoaded', function() {
@@ -1265,4 +1281,3 @@ window.addEventListener('resize', function() {
           });
         }
       });
-      
