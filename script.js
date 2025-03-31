@@ -16,33 +16,34 @@ document.addEventListener('DOMContentLoaded', function() {
   let isResultsActive = false;
   
   // Sample product list – each product has an image, price, caption (optional) and a list of classes (one is a color)
-  const products = [
-    // Original products
-    { id: 1, name: "Rustic Rice Husk Vase", price: "$29.99", image: "https://via.placeholder.com/200x150?text=Rice+Husk+Vase", classes: ["red", "vase"], description: "Handcrafted from upcycled rice husks with a beautiful natural finish." },
-    { id: 2, name: "Modern Bamboo Lamp", price: "$49.99", image: "https://via.placeholder.com/200x150?text=Bamboo+Lamp", classes: ["blue", "lamp"], description: "Elegant lighting solution made from repurposed bamboo waste." },
-    { id: 3, name: "Natural Wheat Straw Cushion", price: "$19.99", image: "https://via.placeholder.com/200x150?text=Wheat+Cushion", classes: ["white", "cushion"], description: "Comfortable cushion with filling made from agricultural wheat straw." },
-    { id: 4, name: "Vibrant Coconut Shell Art", price: "$39.99", image: "https://via.placeholder.com/200x150?text=Coconut+Art", classes: ["red", "art"], description: "Wall decor crafted from coconut shells with natural dyes." },
-    { id: 5, name: "Ocean Blue Jute Cushion", price: "$24.99", image: "https://via.placeholder.com/200x150?text=Jute+Cushion", classes: ["blue", "cushion"], description: "Eco-friendly cushion made from agricultural jute waste." },
-    { id: 6, name: "Minimalist Corn Husk Lamp", price: "$34.99", image: "https://via.placeholder.com/200x150?text=Corn+Lamp", classes: ["white", "lamp"], description: "Sustainable lighting option created from dried corn husks." },
-    { id: 7, name: "Red Sugarcane Chair", price: "$59.99", image: "https://via.placeholder.com/200x150?text=Sugarcane+Chair", classes: ["red", "chair"], description: "Durable chair made from compressed sugarcane fiber." },
-    { id: 8, name: "Ocean Blue Coconut Rug", price: "$89.99", image: "https://via.placeholder.com/200x150?text=Coconut+Rug", classes: ["blue", "rug"], description: "Soft, durable rug woven from coconut fiber with natural dyes." },
-    { id: 9, name: "Ivory Bamboo Side Table", price: "$99.99", image: "https://via.placeholder.com/200x150?text=Bamboo+Table", classes: ["white", "table"], description: "Elegant side table crafted from sustainable bamboo." },
-    
-    // New products for additional colors
-    { id: 10, name: "Lemon Seagrass Basket", price: "$32.99", image: "https://via.placeholder.com/200x150?text=Lemon+Basket", classes: ["lemon", "basket"], description: "Bright yellow basket woven from sustainable seagrass fibers." },
-    { id: 11, name: "Orange Jute Wall Hanging", price: "$27.99", image: "https://via.placeholder.com/200x150?text=Orange+Hanging", classes: ["orange", "art"], description: "Vibrant wall hanging made from hand-dyed jute rope." },
-    { id: 12, name: "Pink Lotus Fiber Bowl", price: "$19.99", image: "https://via.placeholder.com/200x150?text=Pink+Bowl", classes: ["pink", "bowl"], description: "Delicate bowl crafted from dried lotus stems with natural pink coloring." },
-    { id: 13, name: "Lavender Reed Diffuser", price: "$22.99", image: "https://via.placeholder.com/200x150?text=Lavender+Diffuser", classes: ["lavender", "decor"], description: "Aromatic diffuser made with sustainable reed stems and essential oils." },
-    { id: 14, name: "Light Blue Cotton Throw", price: "$45.99", image: "https://via.placeholder.com/200x150?text=Light+Blue+Throw", classes: ["light blue", "textile"], description: "Soft throw blanket woven from organic cotton with natural dyes." },
-    { id: 15, name: "Pastel Green Bamboo Planter", price: "$36.99", image: "https://via.placeholder.com/200x150?text=Pastel+Green+Planter", classes: ["pastel green", "planter"], description: "Eco-friendly planter made from bamboo fiber with subtle green finish." },
-    { id: 16, name: "Green Leaf Plate Set", price: "$29.99", image: "https://via.placeholder.com/200x150?text=Green+Plates", classes: ["green", "tableware"], description: "Biodegradable plates crafted from pressed palm leaves." },
-    { id: 17, name: "Pastel Yellow Corn Husk Wreath", price: "$39.99", image: "https://via.placeholder.com/200x150?text=Yellow+Wreath", classes: ["pastel yellow", "decor"], description: "Delicate wreath made from dried corn husks with a subtle yellow tint." },
-    { id: 18, name: "Peach Sisal Fiber Lampshade", price: "$24.99", image: "https://via.placeholder.com/200x150?text=Peach+Lampshade", classes: ["peach", "lighting"], description: "Warm-toned lampshade woven from sustainable sisal fibers." },
-    { id: 19, name: "Sea Green Algae Candles", price: "$18.99", image: "https://via.placeholder.com/200x150?text=Sea+Green+Candles", classes: ["sea green", "candle"], description: "Eco-friendly candles made with algae wax and natural colorants." },
-    { id: 20, name: "Brown Coffee Husk Ottoman", price: "$79.99", image: "https://via.placeholder.com/200x150?text=Brown+Ottoman", classes: ["brown", "furniture"], description: "Sturdy ottoman stuffed with upcycled coffee husks with natural brown finish." },
-    { id: 21, name: "Golden Wheat Straw Mirror", price: "$49.99", image: "https://via.placeholder.com/200x150?text=Golden+Mirror", classes: ["golden", "decor"], description: "Decorative mirror framed with golden-tinted wheat straw fibers." },
-    { id: 22, name: "Silver Flax Fiber Wall Art", price: "$59.99", image: "https://via.placeholder.com/200x150?text=Silver+Wall+Art", classes: ["silver", "art"], description: "Shimmering wall art created from naturally silvery flax fibers." }
-  ];
+const products = [
+  // Original products
+  { id: 1, name: "Decoration sticks", price: "₹180", image: "https://i.postimg.cc/52d2x6dV/red11.png", classes: ["red", "vase"], description: "Handcrafted from upcycled rice husks with a beautiful natural finish." },
+  { id: 2, name: "Blue dry flower sticks", price: "₹200", image: "https://i.postimg.cc/c4fYQKSD/blu.png", classes: ["blue", "lamp"], description: "Elegant sticks made from dry flowers." },
+  { id: 3, name: "White flower pot boquet", price: "₹250", image: "https://i.postimg.cc/9FpM7Gdt/wh.png", classes: ["white", "cushion"], description: "A beautiful white vase boquet to elevate your space." },
+  { id: 4, name: "Dried leaves sticks", price: "₹120", image: "https://i.postimg.cc/yNxJZ8Bx/lea.png", classes: ["red", "art"], description: "Decorative sticks made with dried leaves in red color." },
+  { id: 5, name: "Eco-friendly boquet", price: "₹450", image: "https://i.postimg.cc/T11JYtbp/10.png", classes: ["blue", "cushion"], description: "A beautiful boquet in pastel colors best for co-operate gifting." },
+  { id: 6, name: "White bouquet", price: "₹350", image: "https://i.postimg.cc/LXVrF2Yk/wwwww.png", classes: ["white", "lamp"], description: "Bouquet with various variety of sticks including wheat sticks." },
+  { id: 7, name: "Christmas tree", price: "₹90", image: "https://i.postimg.cc/9MTyDQtT/cornn.png", classes: ["red", "chair"], description: "Christmas tree made from corn husk." },
+  { id: 8, name: "Blue vase", price: "₹290", image: "https://i.postimg.cc/tRNVwfrX/bv.png", classes: ["blue", "rug"], description: "A beautiful vase made from sugarcane bagasse." },
+  { id: 9, name: "Sustainable home decor", price: "₹420", image: "https://i.postimg.cc/FKv4MPC4/whhhhhhiiiiii.png", classes: ["white", "table"], description: "A best and sustainable option for your house.." },
+  
+  // New products for additional colors
+  { id: 10, name: "Green and yellow sticks", price: "₹180", image: "https://i.postimg.cc/28q7sXmt/15.png", classes: ["lemon", "basket"], description: "A perfect blend of colours." },
+  { id: 11, name: "Orange decorative pieces", price: "₹340", image: "https://i.postimg.cc/76yXj85k/orange.png", classes: ["orange", "art"], description: "A perfect option for your place." },
+  { id: 12, name: "Pink bouquet", price: "₹450", image: "https://i.postimg.cc/mgpCs3Jg/21.png", classes: ["pink", "bowl"], description: "A perfect genz piece of gifting your loved ones." },
+  { id: 13, name: "Lavender flower sticks", price: "₹450", image: "https://i.postimg.cc/442V9RXx/purpl.png", classes: ["lavender", "decor"], description: "Aromatic vibes with the colours of lavender." },
+  { id: 14, name: "Light blue bouquet", price: "₹450", image: " https://i.postimg.cc/XqDbC4gK/llllbbbbb.png", classes: ["light blue", "textile"], description: "Best gifting option for you and your loved ones." },
+  { id: 15, name: "Pastel green bouquet ", price: "₹450", image: "https://i.postimg.cc/NjF2p9Fq/27.png", classes: ["pastel green", "planter"], description: "Explore our pastel colour palet of decors." },
+  // { id: 15, name: "Pastel Green Bamboo Planter", price: "₹", image: "https://i.postimg.cc/NjF2p9Fq/27.png", classes: ["pastel green", "planter"], description: "Eco-friendly planter made from bamboo fiber with subtle green finish." },
+  { id: 16, name: "Green and yellow decor", price: "₹180", image: "https://i.postimg.cc/28q7sXmt/15.png", classes: ["green", "tableware"], description: "Biodegradable plant sticks to decorate your places." },
+  { id: 17, name: "Pastel yellow decorations", price: "₹320", image: "https://i.postimg.cc/YCR7w65L/py.png", classes: ["pastel yellow", "decor"], description: "Decorative sticks with round flowers on top." },
+  { id: 18, name: "Peach decoration", price: "₹350", image: "https://i.postimg.cc/G2GyGW24/23.png", classes: ["peach", "lighting"], description: "Peach color decoration with variety of flowers and eco-friendly sticks." },
+  { id: 19, name: "Light green coloured sticks", price: "₹280", image: "https://i.postimg.cc/VvF0HXX1/25.png", classes: ["sea green", "candle"], description: "Bunch of light green coloured sticks." },
+  { id: 20, name: "Brown home decor", price: "₹450", image: "https://i.postimg.cc/pXTdHNHK/35.png", classes: ["brown", "furniture"], description: "A variety of brown decorations." },
+  { id: 21, name: "Golden sustainable decor", price: "₹320", image: "https://i.postimg.cc/dVHfB5M6/goldennnn.png", classes: ["golden", "decor"], description: "Decorative golden flower pot sticks." },
+  { id: 22, name: "Silver eco friendly sticks ", price: "₹280", image: "https://i.postimg.cc/h4L3wDWf/silverrrr.png", classes: ["silver", "art"], description: "Shimmering decorative flower pot sticks." }
+];
   
   // ===== Scroll Effects =====
   window.addEventListener('scroll', function() {
@@ -492,58 +493,7 @@ topPredictions.forEach(prediction => {
         });
       }, 100);
       
-      // Enable cart functionality
-      const addToCartButtons = resultsDiv.querySelectorAll('.add-to-cart-btn');
-      addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          this.innerHTML = 'Added to Cart';
-          this.style.backgroundColor = '#4CAF50';
-          this.style.pointerEvents = 'none';
-          
-          // Reset after 2 seconds
-          setTimeout(() => {
-            this.innerHTML = 'Add to Cart';
-            this.style.backgroundColor = '';
-            this.style.pointerEvents = '';
-          }, 2000);
-          
-          
-          // Update cart count indicator if exists
-          const cartIcon = document.querySelector('.nav-icons a:nth-child(2)');
-          if (cartIcon) {
-            const cartBadge = cartIcon.querySelector('.cart-badge') || document.createElement('span');
-            cartBadge.className = 'cart-badge';
-            
-            const currentCount = cartBadge.textContent ? parseInt(cartBadge.textContent) : 0;
-            cartBadge.textContent = currentCount + 1;
-            
-            cartBadge.style.position = 'absolute';
-            cartBadge.style.top = '-10px';
-            cartBadge.style.right = '-10px';
-            cartBadge.style.backgroundColor = 'var(--primary-color)';
-            cartBadge.style.color = 'white';
-            cartBadge.style.borderRadius = '50%';
-            cartBadge.style.width = '20px';
-            cartBadge.style.height = '20px';
-            cartBadge.style.display = 'flex';
-            cartBadge.style.justifyContent = 'center';
-            cartBadge.style.alignItems = 'center';
-            cartBadge.style.fontSize = '12px';
-            
-            if (!cartIcon.querySelector('.cart-badge')) {
-              cartIcon.style.position = 'relative';
-              cartIcon.appendChild(cartBadge);
-            }
-            
-            // Animate cart icon
-            cartIcon.style.animation = 'pulse 0.5s';
-            setTimeout(() => {
-              cartIcon.style.animation = '';
-            }, 500);
-          }
-        });
-      });
-      }
+    }
       
       // Back to Home button
       function backToHome() {

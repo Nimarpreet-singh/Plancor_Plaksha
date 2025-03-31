@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sustainability | Plancor</title>
+  <link rel="stylesheet" href="pagebasics.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <style>
+    /* Global Styles (from your CSS) */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --primary-color: #2e7d32;
+      --primary-light: #60ad5e;
+      --primary-dark: #005005;
+      --secondary-color: #f5f5f5;
+      --text-color: #333;
+      --text-light: #777;
+      --white: #ffffff;
+      --black: #000000;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    /* Navbar and Footer are from your existing code */
+
+    /* Sustainability Hero Section */
+    .sustainability-hero {
+      height: 90vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      animation: fadeInUp 1.2s ease forwards;
+    }
+
+    .leaf {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232e7d32"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/></svg>');
+      background-size: cover;
+      opacity: 0.7;
+      z-index: 1;
+    }
+
+    /* Stats Counter Section */
+    .stats-section {
+      padding: 80px 0;
+      background-color: var(--white);
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 40px 20px;
+      border-radius: 10px;
+      background-color: var(--white);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--primary-dark);
+    }
+
+    .stat-text {
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    /* Process Section */
+    .process-section {
+      padding: 100px 0;
+      background-color: var(--secondary-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
+
+    .section-title p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .process-steps {
+      display: flex;
+      justify-content: space-around;
+      position: relative;
+      margin-top: 50px;
+    }
+
+    .process-line {
+  position: absolute;
+  top: 40%;
+  left: 12%;
+  right: 12%;
+  height: 3px;
+  background-color: var(--primary-light);
+  z-index: 1;
+}
+
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 180px;
+      z-index: 2;
+    }
+
+    .step-icon {
+      width: 80px;
+      height: 80px;
+      background-color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: var(--primary-color);
+      box-shadow: var(--shadow);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .step-icon::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px dashed var(--primary-light);
+      animation: spin 20s linear infinite;
+    }
+
+    .process-step:hover .step-icon {
+      transform: scale(1.1);
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .step-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary-dark);
+    }
+
+    .step-description {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+      padding: 100px 0;
+      background-color: var(--white);
+    }
+
+    .benefits-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .benefit-card {
+      background-color: var(--white);
+      border-radius: 10px;
+      padding: 40px 30px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .benefit-card::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 0;
+      background-color: var(--primary-light);
+      opacity: 0.1;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      transition: var(--transition);
+    }
+
+    .benefit-card:hover::before {
+      height: 100%;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .benefit-icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .benefit-title {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--primary-dark);
+    }
+
+    .benefit-description {
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    /* Impact Section */
+    .impact-section {
+      padding: 100px 0;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .impact-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      display: block;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+
+    .impact-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .impact-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .impact-text p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .impact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .impact-item-icon {
+      margin-right: 15px;
+      font-size: 1.5rem;
+      color: var(--white);
+    }
+
+    .impact-item-text {
+      font-size: 1.1rem;
+    }
+
+    .impact-image {
+      position: relative;
+    }
+
+    .earth-container {
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .earth {
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="%2334A853"/><path d="M256,0v512c141.4,0,256-114.6,256-256S397.4,0,256,0z" fill="%2334A853"/><path d="M68.2,256c0-103.5,62-192.7,150.9-232.3C79.9,48.2,25.5,156.1,53.7,275.8c19.9,84.2,84.1,148.8,168.2,169.1 C131.6,400.1,68.2,335.4,68.2,256z" fill="%230D652D"/><path d="M187.7,23.7c-14.7,10-44.4,33.2-44.4,33.2c18.7,10.9,55.3,12.5,55.3,12.5s-14.5,9.7-18.5,18.5c-11.5,25,4.4,33.3,4.4,33.3 s-27.1,17-27.1,38.6c0,21.6,13.3,31.1,13.3,31.1s-44.3,1.8-60.5,27.8s17.9,63,17.9,63s-42.3,33.7-39.7,63.1 c2.6,29.3,46.2,42.2,46.2,42.2s29,36.3,50.8,36.3c21.8,0,32.4-20.3,32.4-20.3S279,319.5,279,279s-44.8-60.8-44.8-60.8 s36.3-15.6,36.3-44.9c0-29.3-39.9-43.8-39.9-43.8s33-27.8,33-47.6C263.6,61.9,187.7,23.7,187.7,23.7z" fill="%23FFFFFF"/><path d="M368.7,22.3l-17.1,35.2l8.5,13.5c0,0,39.5,9.6,39.5,34.7s-50.8,42.5-50.8,42.5l-19.4-14.6c0,0-21.1,22.9-11.5,44.9 c9.6,22,53.2,21.6,53.2,21.6l14.8,38.2l-20.2,14.9c0,0,20.7,31.2,20.7,50.8c0,19.6-28,31.1-28,31.1l5.7,25.4l-25.4,29.3l28,32.4 l39.5-16.5l33.8-36.3C440,369.5,464,315.8,464,256C464,141.6,390.9,46.3,292.4,12.9L368.7,22.3z" fill="%23FFFFFF"/></svg>');
+      background-size: cover;
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      animation: rotate 60s linear infinite;
+    }
+
+    .plant {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232e7d32"><path d="M12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2C12.6,2 13.2,2.1 13.7,2.3C13.3,3.4 13.3,4.6 13.7,5.7C14.1,6.8 14.8,7.8 15.8,8.5C15.8,8.5 15.9,8.6 16,8.7C16.1,8.8 16.2,8.8 16.2,8.9C16.8,9.4 17.4,9.7 18.1,9.9C17,12.1 15.1,13.8 12.9,14.7C13,15.1 13,15.5 13,15.9C13,18.8 10.8,21.1 8,21.1C7.7,21.1 7.4,21 7.1,21C8.5,21.6 10.2,22 12,22M6.3,17C6.1,17 6,17.1 5.9,17.2C5.8,17.3 5.7,17.5 5.7,17.7C5.7,18.1 6,18.4 6.3,18.4C6.7,18.4 7,18.1 7,17.7C7,17.4 6.7,17 6.3,17M6.5,15.7C5.5,15.3 4.7,14.8 4,14.3C4.4,12.8 5.2,11.4 6.4,10.3C6.2,11.1 6.1,11.9 6.1,12.7C6.1,13.9 6.4,15 6.8,16.1C6.8,16 6.8,15.8 6.7,15.7C6.6,15.5 6.5,15.7 6.5,15.7M8,19C5.8,19 4,17.2 4.1,15C4.7,15.7 5.6,16.2 6.7,16.7C8.4,17.5 10.5,17.8 12.9,17C12.8,17.2 12.7,17.4 12.5,17.6C11.8,18.3 10.9,18.8 9.9,18.9C9.3,19 8.6,19 8,19Z"/></svg>');
+      background-size: cover;
+      bottom: -30px;
+      right: -20px;
+      transform: translateY(0);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 80px 0;
+      background-color: var(--secondary-color);
+      text-align: center;
+    }
+
+    .cta-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--primary-dark);
+    }
+
+    .cta-content p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: var(--text-light);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--primary-color);
+      color: var(--white);
+      transform: translateY(-3px);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 992px) {
+      .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-steps {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .process-line {
+        display: none;
+      }
+
+      .benefits-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .impact-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .earth-container {
+        margin-top: 40px;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+      }
+
+      .benefits-container {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .stats-container {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+
+      .cta-content h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar (Your existing code) -->
+  <nav class="navbar">
+    <div class="logo">
+      <h1><span class="eco">Plancor</span></h1>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="farmer.html" >Farmers</a>
+      <a href="sustainability.html" class="active">Sustainability</a>
+      <a href="contactus.html">Contact</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#"><i class="fas fa-search"></i></a>
+      <a href="#"><i class="fas fa-shopping-cart"></i></a>
+      <a href="#"><i class="fas fa-user"></i></a>
+    </div>
+    <div class="hamburger">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="sustainability-hero" id="hero">
+    <div class="hero-content">
+      <h1>Sustainability at the Core</h1>
+      <p>At Plancor, we're transforming agricultural waste into beautiful home decor, creating a sustainable cycle that helps both our planet and rural communities.</p>
+      <a href="#impact" class="btn btn-primary">Discover Our Impact</a>
+    </div>
+    
+    <!-- Animated falling leaves -->
+    <div id="leaves"></div>
+  </section>
+
+  <!-- Stats Section
+  <section class="stats-section" id="stats">
+    <div class="container">
+      <div class="stats-container">
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+          <div class="stat-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <div class="stat-number" id="counter1">350</div>
+          <div class="stat-text">Million Tons of Farm Waste Produced Yearly</div>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+          <div class="stat-icon">
+            <i class="fas fa-recycle"></i>
+          </div>
+          <div class="stat-number" id="counter2">500</div>
+          <div class="stat-text">Tons of Farm Waste Recycled</div>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-number" id="counter3">1000</div>
+          <div class="stat-text">Rural Jobs Created</div>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+          <div class="stat-icon">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <div class="stat-number" id="counter4">5000</div>
+          <div class="stat-text">Trees Saved</div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Process Section -->
+  <section class="process-section" id="process">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Sustainable Process</h2>
+        <p>From farm waste to beautiful home decor, our process is designed to be environmentally friendly at every step.</p>
+      </div>
+      
+      <div class="process-steps">
+        <div class="process-line"></div>
+        
+        <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+          <div class="step-icon">
+            <i class="fas fa-tractor"></i>
+          </div>
+          <h3 class="step-title">Collection</h3>
+          <p class="step-description">We collect agricultural waste that would otherwise be burned or discarded.</p>
+        </div>
+        
+        <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+          <div class="step-icon">
+            <i class="fas fa-filter"></i>
+          </div>
+          <h3 class="step-title">Processing</h3>
+          <p class="step-description">The waste is processed using eco-friendly methods to create our base materials.</p>
+        </div>
+        
+        <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+          <div class="step-icon">
+            <i class="fas fa-paint-brush"></i>
+          </div>
+          <h3 class="step-title">Crafting</h3>
+          <p class="step-description">Skilled artisans transform the materials into beautiful decor pieces.</p>
+        </div>
+        
+        <div class="process-step" data-aos="fade-up" data-aos-delay="400">
+          <div class="step-icon">
+            <i class="fas fa-box"></i>
+          </div>
+          <h3 class="step-title">Eco-Packaging</h3>
+          <p class="step-description">Products are packaged using recyclable and biodegradable materials.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section" id="benefits">
+    <div class="container">
+      <div class="section-title">
+        <h2>Why Choose Plancor?</h2>
+        <p>Our products don't just look beautiful – they help create a better world.</p>
+      </div>
+      
+      <div class="benefits-container">
+        <div class="benefit-card" data-aos="flip-left" data-aos-delay="100">
+          <div class="benefit-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <h3 class="benefit-title">First in the Market</h3>
+          <p class="benefit-description">We're pioneering a new category of sustainable decor with a wide range of product options.</p>
+        </div>
+        
+        <div class="benefit-card" data-aos="flip-left" data-aos-delay="200">
+          <div class="benefit-icon">
+            <i class="fas fa-globe-americas"></i>
+          </div>
+          <h3 class="benefit-title">Eco-Friendly</h3>
+          <p class="benefit-description">Our products help reduce carbon footprints by recycling waste and preventing burning.</p>
+        </div>
+        
+        <div class="benefit-card" data-aos="flip-left" data-aos-delay="300">
+          <div class="benefit-icon">
+            <i class="fas fa-home"></i>
+          </div>
+          <h3 class="benefit-title">Rural Development</h3>
+          <p class="benefit-description">We create jobs in rural areas and provide farmers with additional income sources.</p>
+        </div>
+        
+        <div class="benefit-card" data-aos="flip-left" data-aos-delay="400">
+          <div class="benefit-icon">
+            <i class="fas fa-ban"></i>
+          </div>
+          <h3 class="benefit-title">Plastic Replacement</h3>
+          <p class="benefit-description">Our products directly replace plastic decor items, reducing plastic waste in the environment.</p>
+        </div>
+        
+        <div class="benefit-card" data-aos="flip-left" data-aos-delay="500">
+          <div class="benefit-icon">
+            <i class="fas fa-gift"></i>
+          </div>
+          <h3 class="benefit-title">Unique Gifting</h3>
+          <p class="benefit-description">Provide eco-friendly gifting options that stand out and make a positive statement.</p>
+        </div>
+        
+        <div class="benefit-card" data-aos="flip-left" data-aos-delay="600">
+          <div class="benefit-icon">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h3 class="benefit-title">Beautiful Design</h3>
+          <p class="benefit-description">Sustainability doesn't mean compromising on style – our products are designed to enhance your space.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Section -->
+  <section class="impact-section" id="impact">
+    <div class="impact-particles" id="particles">
+        <!-- Particles will be added via JavaScript -->
+      </div>
+      
+      <div class="container">
+        <div class="impact-content">
+          <div class="impact-text" data-aos="fade-right">
+            <h2>Our Environmental Impact</h2>
+            <p>Every Plancor product you purchase contributes to meaningful environmental change. We're not just creating beautiful decor – we're building a sustainable future.</p>
+            
+            <div class="impact-item">
+              <div class="impact-item-icon">
+                <i class="fas fa-fire-alt"></i>
+              </div>
+              <div class="impact-item-text">Reduced agricultural waste burning, improving air quality</div>
+            </div>
+            
+            <div class="impact-item">
+              <div class="impact-item-icon">
+                <i class="fas fa-tree"></i>
+              </div>
+              <div class="impact-item-text">Less dependence on wood, saving forests and biodiversity</div>
+            </div>
+            
+            <div class="impact-item">
+              <div class="impact-item-icon">
+                <i class="fas fa-coins"></i>
+              </div>
+              <div class="impact-item-text">Additional income for farmers, supporting rural livelihoods</div>
+            </div>
+            
+            <div class="impact-item">
+              <div class="impact-item-icon">
+                <i class="fas fa-wind"></i>
+              </div>
+              <div class="impact-item-text">Lower carbon footprint compared to conventional decor products</div>
+            </div>
+          </div>
+          
+          <div class="impact-image" data-aos="fade-left">
+            <div class="earth-container">
+              <div class="earth"></div>
+              <div class="plant"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- CTA Section -->
+    <section class="cta-section" id="cta">
+      <div class="container">
+        <div class="cta-content" data-aos="zoom-in">
+          <h2>Join Our Green Journey</h2>
+          <p>By choosing Plancor products, you're not just decorating your home – you're making a statement about sustainability and supporting rural communities.</p>
+          <div class="cta-buttons">
+            <a href="products.html" class="btn btn-primary">Shop Now</a>
+            <a href="#" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Footer (Your existing code) -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3><span class="eco"></span>Plancor</h3>
+          <p>Beautiful, sustainable home decor crafted from agricultural waste.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Shop</h4>
+          <a href="#">All Products</a>
+          <a href="#">New Arrivals</a>
+          <a href="#">Best Sellers</a>
+          <a href="#">Sale</a>
+        </div>
+        <div class="footer-column">
+          <h4>About</h4>
+          <a href="#">Our Story</a>
+          <a href="#">Sustainability</a>
+          <a href="#">Artisans</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-column">
+          <h4>Help</h4>
+          <a href="#">Shipping & Returns</a>
+          <a href="#">FAQ</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Plancor. All rights reserved.</p>
+      </div>
+    </footer>
+  
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      // Initialize AOS animation library
+      AOS.init({
+        duration: 1000,
+        once: true
+      });
+  
+      // Create falling leaves animation
+      function createLeaves() {
+        const leaves = document.getElementById('leaves');
+        const leafCount = 15;
+        
+        for (let i = 0; i < leafCount; i++) {
+          const leaf = document.createElement('div');
+          leaf.classList.add('leaf');
+          
+          // Random position, size and animation duration
+          const posX = Math.floor(Math.random() * 100);
+          const size = Math.floor(Math.random() * 20) + 10; // 10-30px
+          const duration = Math.floor(Math.random() * 10) + 10; // 10-20s
+          const delay = Math.floor(Math.random() * 10);
+          
+          leaf.style.left = `${posX}%`;
+          leaf.style.width = `${size}px`;
+          leaf.style.height = `${size}px`;
+          leaf.style.animationDuration = `${duration}s`;
+          leaf.style.animationDelay = `${delay}s`;
+          leaf.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+          
+          leaves.appendChild(leaf);
+        }
+      }
+  
+      // Create particles in impact section
+      function createParticles() {
+        const particles = document.getElementById('particles');
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          // Random position, size and animation
+          const size = Math.floor(Math.random() * 5) + 2; // 2-7px
+          const posX = Math.floor(Math.random() * 100);
+          const posY = Math.floor(Math.random() * 100);
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${posX}%`;
+          particle.style.top = `${posY}%`;
+          particle.style.opacity = Math.random() * 0.5 + 0.1;
+          
+          particles.appendChild(particle);
+        }
+      }
+  
+      // Counter animation for stats
+      function animateCounters() {
+        const counters = document.querySelectorAll('[id^="counter"]');
+        const speed = 200; // The lower the faster
+        
+        counters.forEach(counter => {
+          const target = +counter.innerText;
+          const increment = target / speed;
+          let count = 0;
+          
+          const updateCount = () => {
+            if (count < target) {
+              count += increment;
+              counter.innerText = Math.ceil(count);
+              setTimeout(updateCount, 1);
+            } else {
+              counter.innerText = target;
+            }
+          };
+          
+          updateCount();
+        });
+      }
+  
+      // Mobile navigation toggle
+      const hamburger = document.querySelector('.hamburger');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (hamburger) {
+        hamburger.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+          hamburger.classList.toggle('active');
+        });
+      }
+  
+      // Run animations on load
+      window.addEventListener('load', () => {
+        createLeaves();
+        createParticles();
+        
+        // Animate counters when they come into view
+        const statsSection = document.querySelector('.stats-section');
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            animateCounters();
+            observer.disconnect();
+          }
+        });
+        
+        observer.observe(statsSection);
+      });
+  
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+  </html>

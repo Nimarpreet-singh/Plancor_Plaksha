@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plancor - Home Decor from Agro-Waste</title>
+    <link rel="stylesheet" href="pagebasics.css">
+    <!-- <link rel="stylesheet" href="farmer.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 992px) {
+    .contact-section .container {
+        flex-direction: column-reverse;
+    }
+    
+    .contact-form-column, .contact-info-column {
+        width: 100%;
+        padding-right: 0;
+    }
+    
+    .contact-info-column {
+        margin-bottom: 40px;
+    }
+    
+    .info-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .info-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-form-column form {
+        padding: 25px;
+    }
+}
+</style>
+</head>
+<body>
+    
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <h1><span class="eco">Plancor</h1>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" >Home</a>
+      <a href="products.html">Products</a>
+      <a href="farmer.html">Farmers</a>
+      <a href="sustainability.html">Sustainability</a>
+      <a href="contactus.html" class="active">Contact</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#"><i class="fas fa-search"></i></a>
+      <a href="#"><i class="fas fa-shopping-cart"></i></a>
+      <a href="#"><i class="fas fa-user"></i></a>
+    </div>
+    <div class="hamburger">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </nav>
+  <section class="contact-section" style="padding: 100px 0 60px; background-color: #f8f8f8;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; flex-wrap: wrap;">
+        <!-- Contact Form Column (Left) -->
+        <div class="contact-form-column" style="flex: 1; min-width: 300px; padding-right: 30px;">
+            <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" style="background-color: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <input type="hidden" name="access_key" value="987669af-2885-4822-ad83-67118042bf76">
+                <input type="hidden" name="subject" value="New Contact Form Submission">
+                <input type="hidden" name="from_name" value="Plancor">
+                <input type="hidden" name="redirect" value="https://web3forms.com/success">
+                
+                <h2 style="font-size: 1.8rem; margin-bottom: 30px; color: #333; font-weight: 600;">Send Us a Message</h2>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="name" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Full Name <span style="color: #ff4444;">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.95rem;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="email" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Email Address <span style="color: #ff4444;">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email address" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.95rem;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="phone" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number (optional)" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.95rem;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="subject" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Subject <span style="color: #ff4444;">*</span></label>
+                    <input type="text" id="subject" name="subject" required placeholder="What is this regarding?" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.95rem;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="inquiry_type" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Type of Inquiry <span style="color: #ff4444;">*</span></label>
+                    <select id="inquiry_type" name="inquiry_type" required style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.95rem; background-color: white;">
+                        <option value="">Select an option</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Product Information">Product Information</option>
+                        <option value="Partnership">Partnership Opportunities</option>
+                        <option value="Waste Supply">Waste Supply</option>
+                        <option value="Job Opportunities">Job Opportunities</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="message" style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Message <span style="color: #ff4444;">*</span></label>
+                    <textarea id="message" name="message" required placeholder="Type your message here..." rows="5" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.95rem; resize: vertical; min-height: 150px;"></textarea>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="newsletter" name="newsletter" value="yes" style="width: 18px; height: 18px;">
+                    <label for="newsletter" style="font-size: 0.95rem; color: #666;">Subscribe to our newsletter for updates</label>
+                </div>
+                
+                <div class="error-message" id="errorMessage" style="display: none; padding: 10px 15px; background-color: #ffe0e0; color: #d32f2f; border-radius: 6px; font-size: 0.9rem; margin-bottom: 15px;"></div>
+                <div class="success-message" id="successMessage" style="display: none; padding: 10px 15px; background-color: #e0f2e9; color: #2e7d32; border-radius: 6px; font-size: 0.9rem; margin-bottom: 15px;"></div>
+                
+                <div class="loading" id="loading" style="display: none; text-align: center; padding: 10px 0; margin-bottom: 15px;">
+                    <div class="loading-spinner" style="width: 30px; height: 30px; border: 3px solid #f3f3f3; border-top: 3px solid #2e7d32; border-radius: 50%; margin: 0 auto 10px; animation: spin 1s linear infinite;"></div>
+                    <p style="font-size: 0.9rem; color: #666;">Sending your message...</p>
+                </div>
+                
+                <button type="submit" id="submitBtn" style="background-color: #2e7d32; color: white; padding: 14px 30px; border-radius: 6px; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; cursor: pointer; border: none; outline: none; width: 100%;">Send Message</button>
+            </form>
+        </div>
+        
+        <!-- Contact Info Column (Right) -->
+        <div class="contact-info-column" style="flex: 1; min-width: 300px;">
+            <div class="info-heading" style="margin-bottom: 30px; text-align: center;">
+                <h2 style="font-size: 2.2rem; color: #333; margin-bottom: 15px;">Get In Touch</h2>
+                <p style="font-size: 1.1rem; color: #666; max-width: 450px; margin: 0 auto; line-height: 1.6;">Have questions about our sustainable products or how we transform agro-waste into beautiful decor? We're here to help!</p>
+            </div>
+            
+            <div class="info-cards" style="display: flex; flex-direction: column; gap: 25px;">
+                <div class="info-card" style="background-color: white; border-radius: 10px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div class="info-icon" style="width: 70px; height: 70px; border-radius: 50%; background-color: #60ad5e; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                        <i class="fas fa-map-marker-alt" style="font-size: 28px; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.4rem; margin-bottom: 10px; color: #333;">Visit Us</h3>
+                    <p style="color: #666; line-height: 1.5; margin-bottom: 5px;">Eco Business Park</p>
+                    <p style="color: #666; line-height: 1.5;">Kotkapura, Dist Faridkot, Punjab</p>
+                </div>
+                
+                <div class="info-card" style="background-color: white; border-radius: 10px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div class="info-icon" style="width: 70px; height: 70px; border-radius: 50%; background-color: #60ad5e; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                        <i class="fas fa-phone-alt" style="font-size: 28px; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.4rem; margin-bottom: 10px; color: #333;">Call Us</h3>
+                    <p style="color: #666; line-height: 1.5; margin-bottom: 5px;">+91 9814626862</p>
+                    <p style="color: #666; line-height: 1.5;">Mon-Fri, 9am-5pm</p>
+                </div>
+                
+                <div class="info-card" style="background-color: white; border-radius: 10px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div class="info-icon" style="width: 70px; height: 70px; border-radius: 50%; background-color: #60ad5e; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                        <i class="fas fa-envelope" style="font-size: 28px; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.4rem; margin-bottom: 10px; color: #333;">Email Us</h3>
+                    <p style="color: #666; line-height: 1.5; margin-bottom: 15px;">Work.plancor@gmail.com</p>
+                    
+                    <div class="social-links" style="display: flex; gap: 15px; margin-top: 10px;">
+                        <a href="#" style="width: 40px; height: 40px; background-color: #2e7d32; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s ease;">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" style="width: 40px; height: 40px; background-color: #2e7d32; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s ease;">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" style="width: 40px; height: 40px; background-color: #2e7d32; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s ease;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" style="width: 40px; height: 40px; background-color: #2e7d32; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s ease;">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    
+    
+
+<footer class="footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3><span class="eco"></span>Plancor</h3>
+        <p>Beautiful, sustainable home decor crafted from agricultural waste.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <a href="#">All Products</a>
+        <a href="#">New Arrivals</a>
+        <a href="#">Best Sellers</a>
+        <a href="#">Sale</a>
+      </div>
+      <div class="footer-column">
+        <h4>About</h4>
+        <a href="#">Our Story</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Artisans</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-column">
+        <h4>Help</h4>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Plancor. All rights reserved.</p>
+    </div>
+  </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+    const loading = document.getElementById('loading');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Form validation and submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic form validation
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                isValid = false;
+                field.style.borderColor = '#ff4444';
+            } else {
+                field.style.borderColor = '#ddd';
+            }
+        });
+        
+        if (!isValid) {
+            errorMessage.textContent = 'Please fill in all required fields.';
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+            return;
+        }
+        
+        // Email validation
+        const email = document.getElementById('email').value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            errorMessage.textContent = 'Please enter a valid email address.';
+            errorMessage.style.display = 'block';
+            document.getElementById('email').style.borderColor = '#ff4444';
+            return;
+        }
+        
+        // Phone validation if provided
+        const phone = document.getElementById('phone').value;
+        if (phone && !/^\d{10,15}$/.test(phone.replace(/[-()\s]/g, ''))) {
+            errorMessage.textContent = 'Please enter a valid phone number.';
+            errorMessage.style.display = 'block';
+            document.getElementById('phone').style.borderColor = '#ff4444';
+            return;
+        }
+        
+        // Show loading spinner and hide error messages
+        loading.style.display = 'block';
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+        submitBtn.disabled = true;
+        
+        // Submit the form
+        const formData = new FormData(form);
+        
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: new URLSearchParams(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            loading.style.display = 'none';
+            
+            if (data.success) {
+                // Success message
+                successMessage.textContent = 'Your message has been sent successfully! We will get back to you soon.';
+                successMessage.style.display = 'block';
+                form.reset();
+                
+                // Redirect after showing success message
+                setTimeout(() => {
+                    window.location.href = 'https://web3forms.com/success';
+                }, 2000);
+            } else {
+                // Error handling
+                errorMessage.textContent = data.message || 'Something went wrong. Please try again.';
+                errorMessage.style.display = 'block';
+                submitBtn.disabled = false;
+            }
+        })
+        .catch(error => {
+            // Network or other errors
+            loading.style.display = 'none';
+            errorMessage.textContent = 'Network error. Please check your connection and try again.';
+            errorMessage.style.display = 'block';
+            submitBtn.disabled = false;
+        });
+    });
+    
+    // Clear validation errors on input
+    const inputs = form.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            this.style.borderColor = '#ddd';
+            errorMessage.style.display = 'none';
+        });
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plancor - Home Decor from Agro-Waste</title>
+    <link rel="stylesheet" href="pagebasics.css">
+    <link rel="stylesheet" href="farmer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    
+</head>
+<body>
+    
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <h1><span class="eco">Plancor</h1>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" >Home</a>
+      <a href="products.html">Products</a>
+      <a href="farmer.html" class="active">Farmers</a>
+      <a href="sustainability.html">Sustainability</a>
+      <a href="contactus.html">Contact</a>
+      
+    </div>
+    <div class="nav-icons">
+      <a href="#"><i class="fas fa-search"></i></a>
+      <a href="#"><i class="fas fa-shopping-cart"></i></a>
+      <a href="#"><i class="fas fa-user"></i></a>
+    </div>
+    <div class="hamburger">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </nav>
+
+  
+  
+  <!-- Main Content: Farmer Submission Form -->
+  <section class="farmer-form-section">
+      <div class="container">
+          <div class="form-container">
+              <a href="farmer_hindi.html" style="
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              padding: 10px 20px;
+              background: linear-gradient(135deg, #4CAF50, #2E7D32);
+              color: white;
+              font-size: 16px;
+              font-weight: 500;
+              text-decoration: none;
+              border-radius: 8px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              transition: all 0.3s ease;
+              position: relative;
+              overflow: hidden;
+              border: none;
+              cursor: pointer;
+              min-width: 200px;
+              text-align: center;
+              margin: 10px 0;
+          ">
+              <span style="position: relative; z-index: 2;">हिंदी में जारी रखें</span>
+              <span style="display: inline-block; font-size: 20px; transition: transform 0.3s ease; position: relative; z-index: 2; margin-left: 5px;">→</span>
+          </a>      
+<!-- page bloclk -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <h1 class="form-title">Submit Your Crop Waste</h1>
+            <p class="form-subtitle">Help us create sustainable products while earning from your agricultural waste</p>
+            
+            <form id="cropForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="access_key" value="987669af-2885-4822-ad83-67118042bf76">
+                <input type="hidden" name="subject" value="New Crop Submission">
+                <input type="hidden" name="from_name" value="Plancor">
+                <input type="hidden" name="redirect" value="https://web3forms.com/success">
+                
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact_number">Contact Number <span class="required">*</span></label>
+                    <input type="tel" id="contact_number" name="contact_number" required placeholder="Enter your phone number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address (optional)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Address <span class="required">*</span></label>
+                    <input type="text" id="address" name="address" required placeholder="Enter your full address">
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">State <span class="required">*</span></label>
+                    <input type="text" id="location" name="location" required placeholder="Enter your state">
+                </div>
+                
+                <div class="form-group">
+                    <label for="crop_name">Crop/Waste Type <span class="required">*</span></label>
+                    <input type="text" id="crop_name" name="crop_name" required placeholder="E.g., Rice husk, Coconut shells, Sugarcane bagasse">
+                </div>
+                
+                <div class="form-group">
+                    <label for="crop_quantity">Quantity Available (in Kg) <span class="required">*</span></label>
+                    <input type="number" id="crop_quantity" name="crop_quantity" required min="1" placeholder="Enter the amount in kilograms">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description <span class="required">*</span></label>
+                    <textarea id="description" name="description" required placeholder="Describe your agricultural waste (quality, age, current use, etc.)"></textarea>
+                </div>
+                
+                <!-- <div class="form-group">
+                    <label for="crop_photo">Upload Photos (Optional)</label>
+                    <div class="file-upload">
+                        <input type="file" id="crop_photo" name="crop_photo" accept="image/*">
+                        <span class="file-upload-label">Click or drag photos to upload</span>
+                        <div class="file-name"></div>
+                    </div>
+                </div> -->
+                
+                <div class="form-group">
+                    <label for="price_expectation">Expected Price per Kg (Optional)</label>
+                    <input type="number" id="price_expectation" name="price_expectation" min="0" step="0.01" placeholder="Enter your expected price per kg">
+                </div>
+                
+                <div class="error-message message" id="errorMessage"></div>
+                <div class="success-message message" id="successMessage"></div>
+                
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Submitting your information...</p>
+                </div>
+                
+                <button type="submit" class="btn btn-block" id="submitBtn">Submit Crop Information</button>
+            </form>
+            
+            <div class="form-footer">
+                <p>By submitting this form, you agree to our terms and conditions.</p>
+                <p>We'll contact you within 2 business days to discuss your submission.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br>
+
+
+<footer class="footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3><span class="eco"></span>Plancor</h3>
+        <p>Beautiful, sustainable home decor crafted from agricultural waste.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <a href="#">All Products</a>
+        <a href="#">New Arrivals</a>
+        <a href="#">Best Sellers</a>
+        <a href="#">Sale</a>
+      </div>
+      <div class="footer-column">
+        <h4>About</h4>
+        <a href="#">Our Story</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Artisans</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-column">
+        <h4>Help</h4>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Plancor. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('cropForm');
+        const fileUpload = document.getElementById('crop_photo');
+        const fileName = document.querySelector('.file-name');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const loading = document.getElementById('loading');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // Display file name when selected
+        fileUpload.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileName.textContent = this.files[0].name;
+                fileName.style.display = 'block';
+            } else {
+                fileName.style.display = 'none';
+            }
+        });
+        
+        // Form validation and submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic form validation
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'var(--error-color)';
+                } else {
+                    field.style.borderColor = 'var(--border-color)';
+                }
+            });
+            
+            if (!isValid) {
+                errorMessage.textContent = 'Please fill in all required fields.';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+            
+            // Phone number validation
+            const phoneNumber = document.getElementById('contact_number').value;
+            if (!/^\d{10,15}$/.test(phoneNumber.replace(/[-()\s]/g, ''))) {
+                errorMessage.textContent = 'Please enter a valid contact number.';
+                errorMessage.style.display = 'block';
+                document.getElementById('contact_number').style.borderColor = 'var(--error-color)';
+                return;
+            }
+            
+            // Quantity validation
+            const quantity = document.getElementById('crop_quantity').value;
+            if (parseInt(quantity) <= 0) {
+                errorMessage.textContent = 'Please enter a valid quantity greater than zero.';
+                errorMessage.style.display = 'block';
+                document.getElementById('crop_quantity').style.borderColor = 'var(--error-color)';
+                return;
+            }
+            
+            // Show loading spinner and hide error messages
+            loading.style.display = 'block';
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            submitBtn.disabled = true;
+            
+            // Submit the form
+            const formData = new FormData(form);
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                
+                if (data.success) {
+                    // Success message
+                    successMessage.textContent = 'Your crop information has been submitted successfully! We will contact you soon.';
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    fileName.style.display = 'none';
+                    
+                    // Redirect after showing success message
+                    setTimeout(() => {
+                        window.location.href = 'https://web3forms.com/success';
+                    }, 2000);
+                } else {
+                    // Error handling
+                    errorMessage.textContent = data.message || 'Something went wrong. Please try again.';
+                    errorMessage.style.display = 'block';
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                // Network or other errors
+                loading.style.display = 'none';
+                errorMessage.textContent = 'Network error. Please check your connection and try again.';
+                errorMessage.style.display = 'block';
+                submitBtn.disabled = false;
+            });
+        });
+        
+        // Clear validation errors on input
+        const inputs = form.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = 'var(--border-color)';
+                errorMessage.style.display = 'none';
+            });
+        });
+    });
+</script>
+
+
+    
+</body>
+</html>

@@ -1,42 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plancor - Home Decor from Agro-Waste</title>
+    <link rel="stylesheet" href="pagebasics.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+      /* Products Page Specific Styles */
+      .products-header {
+        background-color: var(--primary-color);
+        color: var(--white);
+        padding: 120px 0 60px;
+        text-align: center;
+      }
+    
+      .products-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+    
+      .products-header p {
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+        opacity: 0.9;
+      }
+    
+      .products-section {
+        padding: 60px 0;
+      }
+    
+      .products-layout {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 30px;
+      }
+    
+      /* Filters Sidebar */
+      .product-filters {
+        background-color: var(--white);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        height: fit-content;
+      }
+    
+      .filter-section {
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+      }
+    
+      .filter-section:last-child {
+        border-bottom: none;
+      }
+    
+      .filter-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+      }
+    
+      .category-list {
+        list-style: none;
+      }
+    
+      .category-btn {
+        background: none;
+        text-align: left;
+        font-size: 0.95rem;
+        color: var(--text-color);
+        padding: 8px 0;
+        width: 100%;
+        transition: var(--transition);
+      }
+    
+      .category-btn:hover, .category-btn.active {
+        color: var(--primary-color);
+        font-weight: 500;
+      }
+    
+      .price-inputs {
+        margin-top: 15px;
+      }
+    
+      .price-inputs input[type="range"] {
+        width: 100%;
+        margin-bottom: 10px;
+        accent-color: var(--primary-color);
+      }
+    
+      .price-values {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+      }
+    
+      .color-filters {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+    
+      .color-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: var(--transition);
+        border: 2px solid transparent;
+      }
+    
+      .color-btn:hover, .color-btn.active {
+        transform: scale(1.1);
+        border: 2px solid var(--primary-color);
+      }
+    
+      .clear-filters-btn {
+        background-color: #f5f5f5;
+        color: var(--text-color);
+        padding: 10px 15px;
+        border-radius: 5px;
+        width: 100%;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: var(--transition);
+      }
+    
+      .clear-filters-btn:hover {
+        background-color: #e0e0e0;
+      }
+    
+      /* Products Grid */
+      .products-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
+    
+      .showing-results {
+        font-size: 0.95rem;
+      }
+    
+      .sorting {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    
+      .sorting label {
+        font-size: 0.95rem;
+      }
+    
+      .sorting select {
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+      }
+    
+      .products-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 30px;
+      }
+    
+      .product-card {
+        background-color: var(--white);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+    
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+    
+      .product-img {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+      }
+    
+      .product-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+    
+      .product-card:hover .product-img img {
+        transform: scale(1.05);
+      }
+    
+      .product-label {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+    
+      .product-info {
+        padding: 15px;
+      }
+    
+      .product-category {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-bottom: 5px;
+      }
+    
+      .product-title {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 10px;
+        min-height: 56px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    
+      .product-price {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    
+      .price {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+      }
+    
+      .original-price {
+        text-decoration: line-through;
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-left: 5px;
+      }
+    
+      .add-to-cart {
+        background-color: var(--primary-color);
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+      }
+    
+      .add-to-cart:hover {
+        background-color: var(--primary-dark);
+        transform: scale(1.1);
+      }
+    
+      /* Cart Styles */
+      .cart-popup {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 350px;
+        height: 100vh;
+        background-color: white;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        z-index: 1100;
+        transition: right 0.3s ease;
+        display: flex;
+        flex-direction: column;
+      }
+    
+      .cart-popup.active {
+        right: 0;
+      }
+    
+      .cart-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1050;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+    
+      .cart-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+    
+      .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+      }
+    
+      .cart-header h3 {
+        font-size: 1.2rem;
+      }
+    
+      .close-cart {
+        background: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+    
+      .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+    
+      .empty-cart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        text-align: center;
+        color: var(--text-light);
+      }
+    
+      .empty-cart i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        opacity: 0.3;
+      }
+    
+      .cart-item {
+        display: grid;
+        grid-template-columns: 70px 1fr auto;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+    
+      .cart-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+    
+      .cart-item-img {
+        width: 70px;
+        height: 70px;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+    
+      .cart-item-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    
+      .cart-item-info h4 {
+        font-size: 0.95rem;
+        margin-bottom: 5px;
+      }
+    
+      .cart-item-price {
+        font-weight: 600;
+        color: var(--primary-color);
+        font-size: 0.95rem;
+      }
+    
+      .cart-item-quantity {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 10px;
+      }
+    
+      .quantity-btn {
+        width: 25px;
+        height: 25px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+      }
+    
+      .quantity-btn:hover {
+        background-color: #e0e0e0;
+      }
+    
+      .cart-item-quantity span {
+        font-size: 0.9rem;
+        width: 25px;
+        text-align: center;
+      }
+    
+      .remove-from-cart {
+        color: #e53935;
+        background: none;
+        font-size: 1.1rem;
+        align-self: flex-start;
+      }
+    
+      .cart-footer {
+        padding: 20px;
+        border-top: 1px solid #eee;
+      }
+    
+      .cart-total {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+    
+      .checkout-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 500;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+    
+      .checkout-btn:hover {
+        background-color: var(--primary-dark);
+      }
+    
+      .cart-count {
+        position: fixed;
+        top: 15px;
+        right: 55px;
+        width: 20px;
+        height: 20px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+    
+      .cart-count.active {
+        opacity: 1;
+        visibility: visible;
+      }
+    
+      @media screen and (max-width: 992px) {
+        .products-layout {
+          grid-template-columns: 220px 1fr;
+          gap: 20px;
+        }
+      }
+    
+      @media screen and (max-width: 768px) {
+        .products-layout {
+          grid-template-columns: 1fr;
+        }
         
+        .product-filters {
+          position: fixed;
+          left: -300px;
+          top: 0;
+          height: 100vh;
+          width: 280px;
+          z-index: 1000;
+          overflow-y: auto;
+          transition: left 0.3s ease;
+          border-radius: 0;
+        }
+        
+        .product-filters.active {
+          left: 0;
+        }
+        
+        .filter-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 999;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .filter-overlay.active {
+          opacity: 1;
+          visibility: visible;
+        }
+        
+        .filter-toggle {
+          display: block;
+          margin-bottom: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          padding: 10px 15px;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+        }
+        
+        .products-top {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+        }
+        
+        .cart-popup {
+          width: 300px;
+        }
+      }
+    
+      @media screen and (max-width: 576px) {
+        .products-container {
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 15px;
+        }
+        
+        .product-img {
+          height: 150px;
+        }
+        
+        .product-title {
+          font-size: 0.95rem;
+          min-height: 48px;
+        }
+        
+        .product-category {
+          font-size: 0.75rem;
+        }
+        
+        .price {
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+  </head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <h1><span class="eco">Plancor</h1>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" >Home</a>
+      <a href="products.html" class="active">Products</a>
+      <a href="farmer.html">Farmers</a>
+      <a href="sustainability.html">Sustainability</a>
+      <a href="contactus.html">Contact</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#"><i class="fas fa-search"></i></a>
+      <a href="#"><i class="fas fa-shopping-cart"></i></a>
+      <a href="#"><i class="fas fa-user"></i></a>
+    </div>
+    <div class="hamburger">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </nav>
 
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3><span class="eco">Eco</span>Decor</h3>
-        <p>Beautiful, sustainable home decor crafted from agricultural waste.</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-pinterest-p"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
+
+
+
+
+  
+<!-- page bloclk -->
+
+<!-- Products Header -->
+<div class="products-header">
+  <div class="container">
+    <h1>Our Sustainable Products</h1>
+    <p>Eco-friendly home decor items made from agricultural waste</p>
+  </div>
+</div>
+
+<!-- Products Main Section -->
+<section class="products-section">
+  <div class="container">
+    <div class="products-layout">
+      <!-- Sidebar Filters -->
+      <div class="product-filters">
+        <div class="filter-section">
+          <h3>Categories</h3>
+          <ul class="category-list">
+            <li><button class="category-btn active" data-category="all">All Products</button></li>
+            <li><button class="category-btn" data-category="wall-decor">Wall Decor</button></li>
+            <li><button class="category-btn" data-category="furniture">Furniture</button></li>
+            <li><button class="category-btn" data-category="planters">Planters</button></li>
+            <li><button class="category-btn" data-category="tableware">Tableware</button></li>
+          </ul>
+        </div>
+
+        <div class="filter-section">
+          <h3>Price Range</h3>
+          <div class="price-inputs">
+            <input type="range" id="price-filter" min="0" max="10000" step="500" value="10000">
+            <div class="price-values">
+              <span>₹0</span>
+              <span id="price-value">₹10,000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3>Color</h3>
+          <div class="color-filters">
+            <button class="color-btn" data-color="all" style="background-color: #ffffff; border: 1px solid #ddd;">All</button>
+            <button class="color-btn" data-color="green" style="background-color: #2e7d32;"></button>
+            <button class="color-btn" data-color="brown" style="background-color: #795548;"></button>
+            <button class="color-btn" data-color="beige" style="background-color: #e8dfc9;"></button>
+            <button class="color-btn" data-color="black" style="background-color: #212121;"></button>
+          </div>
+        </div>
+
+        <button class="clear-filters-btn">Clear Filters</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid">
+        <div class="products-top">
+          <div class="showing-results">
+            Showing <span id="product-count">12</span> products
+          </div>
+          <div class="sorting">
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name-az">Name: A to Z</option>
+              <option value="name-za">Name: Z to A</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="products-container" id="products-container">
+          <!-- Products will be dynamically inserted here by JavaScript -->
         </div>
       </div>
-      <div class="footer-column">
-        <h4>Shop</h4>
-        <a href="#">All Products</a>
-        <a href="#">New Arrivals</a>
-        <a href="#">Best Sellers</a>
-        <a href="#">Sale</a>
-      </div>
-      <div class="footer-column">
-        <h4>About</h4>
-        <a href="#">Our Story</a>
-        <a href="#">Sustainability</a>
-        <a href="#">Artisans</a>
-        <a href="#">Blog</a>
-      </div>
-      <div class="footer-column">
-        <h4>Help</h4>
-        <a href="#">Shipping & Returns</a>
-        <a href="#">FAQ</a>
-        <a href="#">Contact Us</a>
-        <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+</section>
+
+<!-- Shopping Cart Popup -->
+<div class="cart-popup" id="cart-popup">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="close-cart" id="close-cart"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <!-- Cart items will be dynamically inserted here -->
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="cart-total">₹0</span>
+    </div>
+    <button class="checkout-btn">Proceed to Checkout</button>
+  </div>
+</div>
+<div class="cart-overlay" id="cart-overlay"></div>
+
+<!-- Cart Count Bubble -->
+<div class="cart-count" id="cart-count">0</div>
+
+
+
+
+
+
+<!-- 
+Navbar -->
+<!-- <nav class="navbar">
+  <div class="logo">
+    <h1><span class="eco">Plancor</h1>
+  </div>
+  <div class="nav-links">
+    <a href="#" class="active">Home</a>
+    <a href="#">Products</a>
+    <a href="#">Farmers</a>
+    <a href="#">Sustainability</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-icons">
+    <a href="#"><i class="fas fa-search"></i></a>
+    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+    <a href="#"><i class="fas fa-user"></i></a>
+  </div>
+  <div class="hamburger">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+</nav> -->
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3><span class="eco"></span>Plancor</h3>
+      <p>Beautiful, sustainable home decor crafted from agricultural waste.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 EcoDecor. All rights reserved.</p>
+    <div class="footer-column">
+      <h4>Shop</h4>
+      <a href="#">All Products</a>
+      <a href="#">New Arrivals</a>
+      <a href="#">Best Sellers</a>
+      <a href="#">Sale</a>
     </div>
-  </footer>
+    <div class="footer-column">
+      <h4>About</h4>
+      <a href="#">Our Story</a>
+      <a href="#">Sustainability</a>
+      <a href="#">Artisans</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-column">
+      <h4>Help</h4>
+      <a href="#">Shipping & Returns</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Plancor. All rights reserved.</p>
+  </div>
+</footer>
+<script>
+  // Products Data
+  const products = [
+    {
+      id: 1,
+      name: "Green wheat sticks",
+      category: "home/office-decor",
+      price: 250,
+      originalPrice: 350,
+      image: "https://i.postimg.cc/50nmVh6h/12.png00",
+      color: "green",
+      isNew: true,
+      description: "Made using wheat sticks"
+    },
+    {
+      id: 2,
+      name: "Dry flowers bouquet",
+      category: "Gifting/decor",
+      price: 999,
+      originalPrice: 1500,
+      image: "https://i.postimg.cc/T11JYtbp/10.png",
+      color: "blue",
+      isNew: false,
+      description: "A beutiful bouquet for gifting or home decor"
+    },
+    {
+      id: 3,
+      name: "Eco-friendly peach decorations",
+      category: "Decor/gifting",
+      price: 480,
+      originalPrice: 600,
+      image: "https://i.postimg.cc/wBtJTyYc/22.png",
+      color: "peach",
+      isNew: true,
+      description: "Sustainable boquet from waste materials"
+    },
+    {
+      id: 4,
+      name: "Flower pot sticks",
+      category: "Decor",
+      price: 250,
+      originalPrice: 300,
+      image: "https://i.postimg.cc/1trz9sXr/20.png",
+      color: "pink",
+      isNew: false,
+      description: "Eco-friendly alternative for decor and gifting"
+    },
+    {
+      id: 5,
+      name: "Flower pot sticks",
+      category: "Decor",
+      price:370,
+      originalPrice: 500,
+      image: "https://i.postimg.cc/tJR4JwVQ/36.png",
+      color: "beige",
+      isNew: false,
+      description: "Artistic wall decor woven from banana fiber"
+    },
+    {
+      id: 6,
+      name: "Yellow home decor",
+      category: "decor",
+      price: 180,
+      originalPrice: 260,
+      image: "https://i.postimg.cc/ZYjq2b1T/39.png",
+      color: "yellow",
+      isNew: true,
+      description: "Yellow decor for your place"
+    },
+    {
+      id: 7,
+      name: "Side table decor" ,
+      category: "Sustainable decors",
+      price: 320,
+      originalPrice: 400,
+      image: "https://i.postimg.cc/VLVks7fp/26.png",
+      color: "green",
+      isNew: false,
+      description: "A beautiful colour palette of sustainable decors"
+    },
+    {
+      id: 8,
+      name: "Flower pot sticks",
+      category: "decor",
+      price: 450,
+      originalPrice: 500,
+      image: "https://i.postimg.cc/pXTdHNHK/35.png",
+      color: "brown ",
+      isNew: false,
+      description: "Available in complimenting shades of brown"
+    },
+    {
+      id: 9,
+      name: "Blue bouquet",
+      category: "gifting",
+      price: 400,
+      originalPrice: 450,
+      image: "https://i.postimg.cc/XqDbC4gK/llllbbbbb.png",
+      color: "light blue",
+      isNew: true,
+      description: "A perfect option for co-operate gifting"
+    },
+    {
+      id: 10,
+      name: "Red flower pot sticks",
+      category: "decor",
+      price: 320,
+      originalPrice: 450,
+      image: "https://i.postimg.cc/52d2x6dV/red11.png",
+      color: "red",
+      isNew: false,
+      description: "Rustic bookshelf made from recycled wood"
+    },
+    {
+      id: 11,
+      name: "Side table decorations",
+      category: "decor",
+      price: 420,
+      originalPrice: 500,
+      image: "https://i.postimg.cc/NjF2p9Fq/27.png",
+      color: "green",
+      isNew: false, 
+      description: "Traditional terracotta hanging planter"
+    },
+    {
+      id: 12,
+      name: "Yellow vase sticks",
+      category: "decor",
+      price: 380,
+      originalPrice: 450,
+      image: "https://i.postimg.cc/dVHfB5M6/goldennnn.png",
+      color: "yellow",
+      isNew: true,
+      description: "Sustainable cutlery set made from natural bamboo"
+    }
+  ];
+
+  // DOM Elements
+  const productsContainer = document.getElementById('products-container');
+  const productCount = document.getElementById('product-count');
+  const priceFilter = document.getElementById('price-filter');
+  const priceValue = document.getElementById('price-value');
+  const categoryButtons = document.querySelectorAll('.category-btn');
+  const colorButtons = document.querySelectorAll('.color-btn');
+  const clearFiltersBtn = document.querySelector('.clear-filters-btn');
+  const sortSelect = document.getElementById('sort-select');
+  const cartPopup = document.getElementById('cart-popup');
+  const cartItems = document.getElementById('cart-items');
+  const closeCart = document.getElementById('close-cart');
+  const cartOverlay = document.getElementById('cart-overlay');
+  const cartTotal = document.getElementById('cart-total');
+  const cartCount = document.getElementById('cart-count');
+  const cartIcon = document.querySelector('.nav-icons a:nth-child(2)');
+
+  // Cart Data
+  let cart = [];
+
+  // Current Filter State
+  let filters = {
+    category: 'all',
+    price: 10000,
+    color: 'all',
+    sort: 'featured'
+  };
+
+  // Format price to Indian Rupees
+  const formatPrice = (price) => {
+    return '₹' + price.toLocaleString('en-IN');
+  };
+
+  // Render Products
+  const renderProducts = () => {
+    // Apply filters
+    let filteredProducts = products.filter(product => {
+      // Category filter
+      if (filters.category !== 'all' && product.category !== filters.category) {
+        return false;
+      }
+      
+      // Price filter
+      if (product.price > filters.price) {
+        return false;
+      }
+      
+      // Color filter
+      if (filters.color !== 'all' && product.color !== filters.color) {
+        return false;
+      }
+      
+      return true;
+    });
+    
+    // Apply sorting
+    switch(filters.sort) {
+      case 'price-low':
+        filteredProducts.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-high':
+        filteredProducts.sort((a, b) => b.price - a.price);
+        break;
+      case 'name-az':
+        filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'name-za':
+        filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      default:
+        // 'featured' - keep original order
+        break;
+    }
+    
+    // Update product count
+    productCount.textContent = filteredProducts.length;
+    
+    // Clear products container
+    productsContainer.innerHTML = '';
+    
+    // Render filtered products
+    filteredProducts.forEach(product => {
+      const productCard = document.createElement('div');
+      productCard.className = 'product-card';
+      
+      productCard.innerHTML = `
+        <div class="product-img">
+          <img src="${product.image}" alt="${product.name}">
+          ${product.isNew ? '<span class="product-label">New</span>' : ''}
+        </div>
+        <div class="product-info">
+          <div class="product-category">${product.category.replace('-', ' ')}</div>
+          <h3 class="product-title">${product.name}</h3>
+          <div class="product-price">
+            <div>
+              <span class="price">${formatPrice(product.price)}</span>
+              ${product.originalPrice ? `<span class="original-price">${formatPrice(product.originalPrice)}</span>` : ''}
+            </div>
+            <button class="add-to-cart" data-id="${product.id}">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      
+      productsContainer.appendChild(productCard);
+    });
+    
+    // Add event listeners to cart buttons
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const productId = parseInt(button.getAttribute('data-id'));
+        addToCart(productId);
+      });
+    });
+  };
+
+  // Render Cart
+  const renderCart = () => {
+    if (cart.length === 0) {
+      cartItems.innerHTML = `
+        <div class="empty-cart">
+          <i class="fas fa-shopping-cart"></i>
+          <p>Your cart is empty</p>
+        </div>
+      `;
+    } else {
+      cartItems.innerHTML = '';
+      
+      cart.forEach(item => {
+        const product = products.find(p => p.id === item.id);
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        
+        cartItem.innerHTML = `
+          <div class="cart-item-img">
+            <img src="${product.image}" alt="${product.name}">
+          </div>
+          <div class="cart-item-info">
+            <h4>${product.name}</h4>
+            <div class="cart-item-price">${formatPrice(product.price)}</div>
+            <div class="cart-item-quantity">
+              <button class="quantity-btn minus" data-id="${product.id}">-</button>
+              <span>${item.quantity}</span>
+              <button class="quantity-btn plus" data-id="${product.id}">+</button>
+            </div>
+          </div>
+          <button class="remove-from-cart" data-id="${product.id}">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+        
+        cartItems.appendChild(cartItem);
+      });
+      
+      // Add event listeners to cart item buttons
+      document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+        button.addEventListener('click', () => {
+          const productId = parseInt(button.getAttribute('data-id'));
+          updateCartItem(productId, -1);
+        });
+      });
+      
+      document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+        button.addEventListener('click', () => {
+          const productId = parseInt(button.getAttribute('data-id'));
+          updateCartItem(productId, 1);
+        });
+      });
+      
+      document.querySelectorAll('.remove-from-cart').forEach(button => {
+        button.addEventListener('click', () => {
+          const productId = parseInt(button.getAttribute('data-id'));
+          removeFromCart(productId);
+        });
+      });
+    }
+    
+    // Update cart total
+    const total = cart.reduce((sum, item) => {
+      const product = products.find(p => p.id === item.id);
+      return sum + (product.price * item.quantity);
+    }, 0);
+    
+    cartTotal.textContent = formatPrice(total);
+    
+    // Update cart count
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = count;
+    
+    if (count > 0) {
+      cartCount.classList.add('active');
+    } else {
+      cartCount.classList.remove('active');
+    }
+  };
+
+  // Add to Cart
+  const addToCart = (productId) => {
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        id: productId,
+        quantity: 1
+      });
+    }
+    
+    // Show success animation
+    const product = products.find(p => p.id === productId);
+    showNotification(`${product.name} added to cart!`);
+    
+    // Update cart
+    renderCart();
+    
+    // Open cart popup
+    openCart();
+  };
+
+  // Update Cart Item
+  const updateCartItem = (productId, change) => {
+    const itemIndex = cart.findIndex(item => item.id === productId);
+    
+    if (itemIndex !== -1) {
+      cart[itemIndex].quantity += change;
+      
+      if (cart[itemIndex].quantity <= 0) {
+        removeFromCart(productId);
+      } else {
+        renderCart();
+      }
+    }
+  };
+
+  // Remove from Cart
+  const removeFromCart = (productId) => {
+    cart = cart.filter(item => item.id !== productId);
+    renderCart();
+  };
+
+  // Open Cart
+  const openCart = () => {
+    cartPopup.classList.add('active');
+    cartOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  // Close Cart
+  const closeCartFunction = () => {
+    cartPopup.classList.remove('active');
+    cartOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  // Show Notification
+  const showNotification = (message) => {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.innerHTML = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }, 2000);
+  };
+
+  // Category Filter
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Update active class
+      categoryButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      
+      // Update filter
+      filters.category = button.getAttribute('data-category');
+      
+      // Re-render products
+      renderProducts();
+    });
+  });
+
+  // Color Filter
+  colorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Update active class
+      colorButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      
+      // Update filter
+      filters.color = button.getAttribute('data-color');
+      
+      // Re-render products
+      renderProducts();
+    });
+  });
+
+  // Price Filter
+  priceFilter.addEventListener('input', () => {
+    // Update filter
+    filters.price = parseInt(priceFilter.value);
+    
+    // Update price display
+    priceValue.textContent = formatPrice(filters.price);
+    
+    // Re-render products
+    renderProducts();
+  });
+
+  // Sort Select
+  sortSelect.addEventListener('change', () => {
+    // Update filter
+    filters.sort = sortSelect.value;
+    
+    // Re-render products
+    renderProducts();
+  });
+
+  // Clear Filters
+  clearFiltersBtn.addEventListener('click', () => {
+    // Reset filters
+    filters = {
+      category: 'all',
+      price: 10000,
+      color: 'all',
+      sort: 'featured'
+    };
+    
+    // Reset UI
+    categoryButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.getAttribute('data-category') === 'all') {
+        btn.classList.add('active');
+      }
+    });
+    
+    colorButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.getAttribute('data-color') === 'all') {
+        btn.classList.add('active');
+      }
+    });
+    
+    priceFilter.value = 10000;
+    priceValue.textContent = formatPrice(10000);
+    
+    sortSelect.value = 'featured';
+    
+    // Re-render products
+    renderProducts();
+  });
+
+  // Cart Event Listeners
+  cartIcon.addEventListener('click', (e) => {
+    e.preventDefault();
+    openCart();
+  });
+  
+  closeCart.addEventListener('click', closeCartFunction);
+  
+  cartOverlay.addEventListener('click', closeCartFunction);
+
+  // Add notification styles
+  const style = document.createElement('style');
+  style.textContent = `
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: -300px;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 5px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      z-index: 1100;
+      transition: right 0.3s ease;
+    }
+    
+    .notification.show {
+      right: 20px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Initial Render
+  renderProducts();
+  renderCart();
+
+  // Add mobile filter toggle for responsive design
+  const filterToggle = document.createElement('button');
+  filterToggle.className = 'filter-toggle';
+  filterToggle.innerHTML = '<i class="fas fa-filter"></i> Show Filters';
+  
+  const filterOverlay = document.createElement('div');
+  filterOverlay.className = 'filter-overlay';
+  
+  const productFilters = document.querySelector('.product-filters');
+  const closeFiltersBtn = document.createElement('button');
+  closeFiltersBtn.className = 'close-filters';
+  closeFiltersBtn.innerHTML = '<i class="fas fa-times"></i>';
+  
+  // Insert elements into DOM for mobile view
+  const productsLayout = document.querySelector('.products-layout');
+  productsLayout.insertBefore(filterToggle, productsLayout.firstChild);
+  document.body.appendChild(filterOverlay);
+  productFilters.insertBefore(closeFiltersBtn, productFilters.firstChild);
+  
+  // Filter toggle event listeners
+  filterToggle.addEventListener('click', () => {
+    productFilters.classList.add('active');
+    filterOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+  
+  closeFiltersBtn.addEventListener('click', () => {
+    productFilters.classList.remove('active');
+    filterOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+  
+  filterOverlay.addEventListener('click', () => {
+    productFilters.classList.remove('active');
+    filterOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  // Style for mobile filter elements
+  const mobileFilterStyle = document.createElement('style');
+  mobileFilterStyle.textContent = `
+    .close-filters {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .filter-toggle {
+      display: none;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-weight: 500;
+      align-items: center;
+      gap: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .close-filters {
+        display: block;
+      }
+      
+      .filter-toggle {
+        display: flex;
+      }
+      
+      .product-filters {
+        padding-top: 50px;
+      }
+    }
+  `;
+  document.head.appendChild(mobileFilterStyle);
+</script>
+</body>
+</html>

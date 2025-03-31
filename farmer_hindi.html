@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>प्लैंकोर - कृषि-अपशिष्ट से गृह सज्जा</title>
+    <link rel="stylesheet" href="pagebasics.css">
+    <link rel="stylesheet" href="farmer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    
+</head>
+<body>
+    
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <h1><span class="eco">प्लैंकोर</h1>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" >Home</a>
+      <a href="products.html">Products</a>
+      <a href="farmer.html" class="active">Farmers</a>
+      <a href="sustainability.html">Sustainability</a>
+      <a href="contactus.html">Contact</a>
+    </div>
+    <div class="nav-icons">
+      <a href="#"><i class="fas fa-search"></i></a>
+      <a href="#"><i class="fas fa-shopping-cart"></i></a>
+      <a href="#"><i class="fas fa-user"></i></a>
+    </div>
+    <div class="hamburger">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </nav>
+
+<!-- page bloclk -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Main Content: Farmer Submission Form -->
+<section class="farmer-form-section">
+    <div class="container">
+        <div class="form-container">
+            <h1 class="form-title">अपनी फसल का अपशिष्ट जमा करें</h1>
+            <p class="form-subtitle">अपने कृषि अपशिष्ट से कमाई करते हुए टिकाऊ उत्पाद बनाने में हमारी मदद करें</p>
+            
+            <form id="cropForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="access_key" value="987669af-2885-4822-ad83-67118042bf76">
+                <input type="hidden" name="subject" value="New Crop Submission">
+                <input type="hidden" name="from_name" value="Plancor">
+                <input type="hidden" name="redirect" value="https://web3forms.com/success">
+                
+                <div class="form-group">
+                    <label for="name">पूरा नाम <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="अपना पूरा नाम भरें">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact_number">संपर्क संख्या<span class="required">*</span></label>
+                    <input type="tel" id="contact_number" name="contact_number" required placeholder="अपना फोन नंबर डालें">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">मेल पता</label>
+                    <input type="email" id="email" name="email" placeholder="अपना ईमेल पता दर्ज करें (वैकल्पिक)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">पता<span class="required">*</span></label>
+                    <input type="text" id="address" name="address" required placeholder="अपना पूरा पता दर्ज करें">
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">राज्य<span class="required">*</span></label>
+                    <input type="text" id="location" name="location" required placeholder="अपना राज्य दर्ज करें">
+                </div>
+                
+                <div class="form-group">
+                    <label for="crop_name">फसल/अपशिष्ट का प्रकार<span class="required">*</span></label>
+                    <input type="text" id="crop_name" name="crop_name" required placeholder="जैसे, चावल की भूसी, नारियल के छिलके, गन्ने की खोई">
+                </div>
+                
+                <div class="form-group">
+                    <label for="crop_quantity">उपलब्ध मात्रा (किग्रा में)<span class="required">*</span></label>
+                    <input type="number" id="crop_quantity" name="crop_quantity" required min="1" placeholder="किलोग्राम में मात्रा दर्ज करें">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">विवरण <span class="required">*</span></label>
+                    <textarea id="description" name="description" required placeholder="अपने कृषि अपशिष्ट का विवरण दें (गुणवत्ता, आयु, वर्तमान उपयोग, आदि)"></textarea>
+                </div>
+                
+                <!-- <div class="form-group">
+                    <label for="crop_photo">Upload Photos (Optional)</label>
+                    <div class="file-upload">
+                        <input type="file" id="crop_photo" name="crop_photo" accept="image/*">
+                        <span class="file-upload-label">Click or drag photos to upload</span>
+                        <div class="file-name"></div>
+                    </div>
+                </div> -->
+                
+                <div class="form-group">
+                    <label for="price_expectation">प्रति किलोग्राम अपेक्षित मूल्य (वैकल्पिक)</label>
+                    <input type="number" id="price_expectation" name="price_expectation" min="0" step="0.01" placeholder="प्रति किलोग्राम अपना अपेक्षित मूल्य दर्ज करें">
+                </div>
+                
+                <div class="error-message message" id="errorMessage"></div>
+                <div class="success-message message" id="successMessage"></div>
+                
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <p>आपकी जानकारी प्रस्तुत की जा रही है...</p>
+                </div>
+                
+                <button type="submit" class="btn btn-block" id="submitBtn">फसल की जानकारी सबमिट करें</button>
+            </form>
+            
+            <div class="form-footer">
+                <p>यह फॉर्म सबमिट करके आप हमारी शर्तों और नियमों से सहमत होते हैं।</p>
+                <p>हम आपके सबमिशन पर चर्चा करने के लिए 2 व्यावसायिक दिनों के भीतर आपसे संपर्क करेंगे।</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br>
+
+
+<footer class="footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3><span class="eco"></span>Plancor</h3>
+        <p>Beautiful, sustainable home decor crafted from agricultural waste.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <a href="#">All Products</a>
+        <a href="#">New Arrivals</a>
+        <a href="#">Best Sellers</a>
+        <a href="#">Sale</a>
+      </div>
+      <div class="footer-column">
+        <h4>About</h4>
+        <a href="#">Our Story</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Artisans</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-column">
+        <h4>Help</h4>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Plancor. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('cropForm');
+        const fileUpload = document.getElementById('crop_photo');
+        const fileName = document.querySelector('.file-name');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const loading = document.getElementById('loading');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // Display file name when selected
+        fileUpload.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileName.textContent = this.files[0].name;
+                fileName.style.display = 'block';
+            } else {
+                fileName.style.display = 'none';
+            }
+        });
+        
+        // Form validation and submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic form validation
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'var(--error-color)';
+                } else {
+                    field.style.borderColor = 'var(--border-color)';
+                }
+            });
+            
+            if (!isValid) {
+                errorMessage.textContent = 'Please fill in all required fields.';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+            
+            // Phone number validation
+            const phoneNumber = document.getElementById('contact_number').value;
+            if (!/^\d{10,15}$/.test(phoneNumber.replace(/[-()\s]/g, ''))) {
+                errorMessage.textContent = 'Please enter a valid contact number.';
+                errorMessage.style.display = 'block';
+                document.getElementById('contact_number').style.borderColor = 'var(--error-color)';
+                return;
+            }
+            
+            // Quantity validation
+            const quantity = document.getElementById('crop_quantity').value;
+            if (parseInt(quantity) <= 0) {
+                errorMessage.textContent = 'Please enter a valid quantity greater than zero.';
+                errorMessage.style.display = 'block';
+                document.getElementById('crop_quantity').style.borderColor = 'var(--error-color)';
+                return;
+            }
+            
+            // Show loading spinner and hide error messages
+            loading.style.display = 'block';
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            submitBtn.disabled = true;
+            
+            // Submit the form
+            const formData = new FormData(form);
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                
+                if (data.success) {
+                    // Success message
+                    successMessage.textContent = 'Your crop information has been submitted successfully! We will contact you soon.';
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    fileName.style.display = 'none';
+                    
+                    // Redirect after showing success message
+                    setTimeout(() => {
+                        window.location.href = 'https://web3forms.com/success';
+                    }, 2000);
+                } else {
+                    // Error handling
+                    errorMessage.textContent = data.message || 'Something went wrong. Please try again.';
+                    errorMessage.style.display = 'block';
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                // Network or other errors
+                loading.style.display = 'none';
+                errorMessage.textContent = 'Network error. Please check your connection and try again.';
+                errorMessage.style.display = 'block';
+                submitBtn.disabled = false;
+            });
+        });
+        
+        // Clear validation errors on input
+        const inputs = form.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = 'var(--border-color)';
+                errorMessage.style.display = 'none';
+            });
+        });
+    });
+</script>
+
+
+    
+</body>
+</html>
