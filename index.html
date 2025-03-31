@@ -21,6 +21,7 @@
       <a href="farmer.html">Farmers</a>
       <a href="sustainability.html">Sustainability</a>
       <a href="contactus.html">Contact</a>
+      <link rel="stylesheet" href="chatbox.css">
     </div>
     <div class="nav-icons">
       <a href="#"><i class="fas fa-search"></i></a>
@@ -53,6 +54,39 @@
       <span>Scroll to Explore</span>
       <i class="fas fa-chevron-down bounce"></i>
     </div>
+
+    <!-- Chatbot Interface -->
+    <div class="chatbot-container">
+      <div class="chatbot-header">
+          <div class="chatbot-title">Farm Assistant</div>
+          <button id="chatbot-toggle">
+              <span class="open-icon">💬</span>
+              <span class="close-icon">✕</span>
+          </button>
+      </div>
+      <div class="chatbot-body">
+          <div class="chatbot-messages" id="chatbot-messages">
+              <div class="message bot-message">
+                  <div class="message-content">
+                      Hello! I'm your Farm Connect assistant. Are you a farmer or a customer?
+                  </div>
+              </div>
+          </div>
+          <div class="chatbot-input">
+              <div class="user-type-selection" id="user-type-selection">
+                  <button data-type="farmer" class="user-type-btn">I'm a Farmer</button>
+                  <button data-type="customer" class="user-type-btn">I'm a Customer</button>
+              </div>
+              <div class="text-input-container" id="text-input-container" style="display: none;">
+                  <input type="text" id="user-input" placeholder="Type your message...">
+                  <button id="send-btn">Send</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script src="chatbox.js"></script>
     <div class="hero-background">
       <div class="shape shape-1"></div>
       <div class="shape shape-2"></div>
@@ -807,9 +841,11 @@
         });
       }, 300);
     }</script>
+   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
   <script src="script.js"></script>
+  
 </body>
 </html>

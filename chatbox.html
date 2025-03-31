@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Connect - AI Chatbot</title>
+    <link rel="stylesheet" href="chatbox.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Farm Connect</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">For Farmers</a></li>
+                    <li><a href="#">For Customers</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <!-- Main content goes here -->
+        </main>
+        
+        <!-- Chatbot Interface -->
+        <div class="chatbot-container">
+            <div class="chatbot-header">
+                <div class="chatbot-title">Farm Assistant</div>
+                <button id="chatbot-toggle">
+                    <span class="open-icon">💬</span>
+                    <span class="close-icon">✕</span>
+                </button>
+            </div>
+            <div class="chatbot-body">
+                <div class="chatbot-messages" id="chatbot-messages">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            Hello! I'm your Farm Connect assistant. Are you a farmer or a customer?
+                        </div>
+                    </div>
+                </div>
+                <div class="chatbot-input">
+                    <div class="user-type-selection" id="user-type-selection">
+                        <button data-type="farmer" class="user-type-btn">I'm a Farmer</button>
+                        <button data-type="customer" class="user-type-btn">I'm a Customer</button>
+                    </div>
+                    <div class="text-input-container" id="text-input-container" style="display: none;">
+                        <input type="text" id="user-input" placeholder="Type your message...">
+                        <button id="send-btn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="chatbox.js"></script>
+</body>
+</html>
