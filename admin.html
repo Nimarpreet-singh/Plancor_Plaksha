@@ -4,54 +4,79 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Plancor — Admin</title>
-  <link rel="stylesheet" href="pagebasics.css"> <!-- reuses your site styles -->
+  <link rel="stylesheet" href="pagebasics.css">
   <style>
-    /* Admin page tweaks */
-    body { background: var(--secondary-color); padding-top: 90px; }
+    :root{
+      --primary-color:#2d8f46;
+      --text-color:#222;
+      --text-light:#666;
+      --secondary-color:#f6f6f6;
+      --shadow: 0 6px 18px rgba(24,24,24,0.06);
+    }
+    body { background: var(--secondary-color); padding-top: 90px; font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--text-color) }
     .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 30px; }
     .admin-header { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px }
     .admin-title { font-size: 1.6rem; font-weight:700; color:var(--text-color); }
     .admin-sub { color:var(--text-light); font-size:0.95rem }
     .card { background: #fff; border-radius:12px; padding:18px; box-shadow: var(--shadow); margin-bottom:18px; }
-    form .row { display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
-    input[type=text], input[type=number], textarea { padding:10px; border:1px solid #ddd; border-radius:8px; width:100%; font-family:inherit; }
+    form .row { display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; align-items:center }
+    input[type=text], input[type=number], textarea, select { padding:10px; border:1px solid #ddd; border-radius:8px; width:100%; font-family:inherit; box-sizing:border-box; }
     input[type=number] { max-width:220px; }
     label { font-weight:600; font-size:0.9rem; color:var(--text-color); display:block; margin-bottom:6px; }
     .btn { background:var(--primary-color); color:#fff; padding:10px 16px; border-radius:8px; cursor:pointer; border:none; font-weight:600; }
-    .btn:disabled { opacity:0.6; cursor:not-allowed; }
+    .btn.outline { background:#fff; border:1px solid #ddd; color:var(--text-color) }
+    .btn.danger { background:#e24b4b }
     .muted { color:var(--text-light); font-size:0.9rem; }
     .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; }
-    .product-item { display:flex; gap:12px; align-items:flex-start; padding:10px; border-radius:8px; border:1px solid #eee; }
+    .product-item { display:flex; gap:12px; align-items:flex-start; padding:10px; border-radius:8px; border:1px solid #eee; background:#fff }
     .product-thumb { width:90px; height:90px; object-fit:cover; border-radius:6px; background:#fafafa; border:1px solid #f0f0f0; }
     .product-meta { flex:1; }
-    .product-actions { display:flex; gap:8px; margin-top:8px; }
+    .product-actions { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;}
     .small { font-size:0.85rem; padding:6px 8px; border-radius:6px; border:none; cursor:pointer; }
-    .danger { background:#ff6b6b; color:white; }
-    .outline { background:#fff; border:1px solid #ddd; color:var(--text-color); }
     .success-msg { padding:10px; background:#e8fbee; color:#176c2f; border-radius:8px; margin-bottom:10px; display:none; }
     .error-msg { padding:10px; background:#ffecec; color:#a33; border-radius:8px; margin-bottom:10px; display:none; }
     .orders-table { width:100%; border-collapse:collapse; }
     .orders-table th, .orders-table td { text-align:left; padding:8px; border-bottom:1px solid #eee; }
-    @media (max-width:780px){ .row { flex-direction:column } input[type=number]{ width:100% } }
+    .topbar { position:fixed; top:0; left:0; right:0; height:68px; background:#fff; display:flex; align-items:center; gap:16px; padding:0 18px; box-shadow: 0 4px 18px rgba(0,0,0,0.06); z-index:999; }
+    .topbar .logo { font-weight:700; color:var(--primary-color); font-size:1.1rem; }
+    .topbar .nav { margin-left:18px; display:flex; gap:12px; align-items:center; }
+    .topbar button { margin-left:auto; }
+    .hidden { display:none !important; }
+    @media (max-width:780px) { .row{flex-direction:column} input[type=number]{width:100%} .product-thumb{width:70px;height:70px} }
+    /* temp sign-in box */
+    #tempLoginBox { max-width:1100px; margin:90px auto 12px; padding:14px; background:#fff; border-radius:10px; box-shadow:var(--shadow); display:none; }
+    #tempLoginBox input{margin-right:8px}
+    /* small helper */
+    .muted-note{font-size:0.85rem;color:#666;margin-top:8px}
   </style>
 </head>
 <body>
 
-  <nav class="navbar" style="position:fixed; top:0; left:0; right:0;">
-    <div class="logo"><h1><span class="eco">Plancor</h1></div>
-    <div class="nav-links">
+  <div class="topbar">
+    <div class="logo">Plancor</div>
+    <nav class="nav" aria-label="Top navigation">
       <a href="index.html">Home</a>
       <a href="products.html">Products</a>
       <a href="farmer.html">Farmers</a>
       <a href="sustainability.html">Sustainability</a>
       <a href="contactus.html">Contact</a>
-    </div>
-    <div style="margin-left:auto; padding-right:22px;">
-      <button id="logoutBtn" class="btn outline" style="background:#fff;color:var(--text-color)">Logout</button>
-    </div>
-  </nav>
+    </nav>
+    <button id="logoutBtn" class="btn outline">Logout</button>
+  </div>
 
-  <main class="admin-wrap">
+  <!-- TEMP LOGIN BOX (shows only if not signed in) -->
+  <div id="tempLoginBox" aria-live="polite">
+    <strong>Sign in to Admin</strong>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+      <input id="tempEmail" type="text" placeholder="email" style="padding:10px;border-radius:8px;border:1px solid #ddd;width:260px">
+      <input id="tempPass" type="password" placeholder="password" style="padding:10px;border-radius:8px;border:1px solid #ddd;width:220px">
+      <button id="tempSignIn" class="btn">Sign in</button>
+      <button id="tempRegister" class="btn outline">Create account</button>
+    </div>
+    <div id="tempMsg" class="muted-note"></div>
+  </div>
+
+  <main class="admin-wrap" id="mainWrap" aria-live="polite">
     <div class="admin-header">
       <div>
         <div class="admin-title">Admin — Product Management</div>
@@ -62,7 +87,7 @@
       </div>
     </div>
 
-    <div id="alerts">
+    <div id="alerts" aria-live="assertive">
       <div id="success" class="success-msg"></div>
       <div id="error" class="error-msg"></div>
     </div>
@@ -153,7 +178,7 @@
     <section class="card" aria-labelledby="orders-heading">
       <h2 id="orders-heading" style="margin-top:0">Recent Orders</h2>
       <div id="ordersWrap">
-        <table class="orders-table">
+        <table class="orders-table" role="table">
           <thead>
             <tr><th>Order ID</th><th>User</th><th>Amount (₹)</th><th>Status</th><th>Created</th></tr>
           </thead>
@@ -162,80 +187,159 @@
         <div id="loadingOrders" class="muted" style="margin-top:8px; display:none">Loading orders…</div>
       </div>
     </section>
-
   </main>
 
-  <!-- Firebase SDKs - add these first -->
+  <!-- Firebase compat SDKs (do not mix with module SDKs on this page) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
-  /**********************
-   *  CONFIG - IMPORTANT
-   *  Replace the firebaseConfig object with your Firebase Web App config
-   *  (Project settings → General → Your apps → Config)
-   **********************/
+  /**************************************************************
+   * IMPORTANT:
+   * This file expects the compat SDKs (above) and uses the global
+   * `firebase` namespace. Do NOT add <script type="module"> imports.
+   *
+   * If you already added a web app in Firebase console, copy your
+   * firebaseConfig object here. The values below are an example
+   * (replace them with YOUR actual project values if different).
+   **************************************************************/
   const firebaseConfig = {
-  apiKey: "AIzaSyBYlI1N9gmbUbDaITYMbng1wyjsJrhSvxI",
-  authDomain: "plancor-8bdf8.firebaseapp.com",
-  projectId: "plancor-8bdf8",
-  storageBucket: "plancor-8bdf8.appspot.com",
-  messagingSenderId: "726914292441",
-  appId: "1:726914292441:web:b3d292249649d65f06fcc8",
-  measurementId: "G-GES9JNP4FT"
-};
+    apiKey: "AIzaSyBYlI1N9gmbUbDaITYMbng1wyjsJrhSvxI",
+    authDomain: "plancor-8bdf8.firebaseapp.com",
+    projectId: "plancor-8bdf8",
+    storageBucket: "plancor-8bdf8.appspot.com",
+    messagingSenderId: "726914292441",
+    appId: "1:726914292441:web:b3d292249649d65f06fcc8",
+    measurementId: "G-GES9JNP4FT"
+  };
 
-//   firebase.initializeApp(firebaseConfig);
-//   const auth = firebase.auth();
-//   const db = firebase.firestore();
+  // Initialize Firebase (compat)
+  if (!window.firebase) {
+    console.error('Firebase compat SDKs not loaded. Check script includes.');
+  } else {
+    try {
+      if (!firebase.apps || firebase.apps.length === 0) {
+        firebase.initializeApp(firebaseConfig);
+      } else {
+        firebase.app();
+      }
+    } catch (errInit) {
+      console.error('firebase init error', errInit);
+    }
+  }
 
-  /**********************
-   *  Helper UI functions
-   **********************/
+  // Create the globals the page expects
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // Short helpers
   const $ = id => document.getElementById(id);
-  function showSuccess(msg) { const el = $('success'); el.textContent = msg; el.style.display = 'block'; setTimeout(()=> el.style.display='none', 4000); }
-  function showError(msg) { const el = $('error'); el.textContent = msg; el.style.display = 'block'; setTimeout(()=> el.style.display='none', 6000); }
+  function showSuccess(msg){ const el=$('success'); el.textContent=msg; el.style.display='block'; setTimeout(()=>el.style.display='none',4000); }
+  function showError(msg){ const el=$('error'); el.textContent=msg; el.style.display='block'; setTimeout(()=>el.style.display='none',6000); console.error(msg); }
 
-  /**********************
-   *  Auth / Access control
-   **********************/
-  let currentUser = null;
-  let currentUserProfile = null;
+  // Hide main UI until admin check complete
+  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
+  $('mainWrap').style.display='none';
+
+  // Temp login box show/hide
+  const tempBox = $('tempLoginBox');
+  const adminStatus = $('adminStatus');
 
   // Logout button
   $('logoutBtn').addEventListener('click', async () => {
-    await auth.signOut();
-    window.location.href = 'index.html';
+    try {
+      await auth.signOut();
+      location.href = 'index.html';
+    } catch (e) {
+      console.error('Sign out error', e);
+      showError('Logout failed: ' + (e.message||e));
+    }
   });
 
-  // Check auth state
+  // Temporary sign-in handlers (for testing / convenience)
+  $('tempSignIn').addEventListener('click', async ()=>{
+    const e = $('tempEmail').value.trim();
+    const p = $('tempPass').value;
+    if(!e || !p) { $('tempMsg').textContent = 'Provide email & password'; return; }
+    $('tempMsg').textContent = 'Signing in…';
+    try {
+      await auth.signInWithEmailAndPassword(e,p);
+      $('tempMsg').textContent = 'Signed in';
+    } catch(err) {
+      console.error('Sign in error',err);
+      $('tempMsg').textContent = 'Sign in error: '+(err.message||err.code);
+    }
+  });
+
+  $('tempRegister').addEventListener('click', async ()=>{
+    const e = $('tempEmail').value.trim();
+    const p = $('tempPass').value;
+    if(!e || !p) { $('tempMsg').textContent = 'Provide email & password'; return; }
+    $('tempMsg').textContent = 'Creating account…';
+    try {
+      const cred = await auth.createUserWithEmailAndPassword(e,p);
+      // Create a users doc (non-admin by default)
+      await db.collection('users').doc(cred.user.uid).set({
+        email: e,
+        displayName: '',
+        isAdmin: false,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      $('tempMsg').textContent = 'Account created. Ask admin to set isAdmin=true';
+    } catch(err) {
+      console.error('Create user error',err);
+      $('tempMsg').textContent = 'Create error: '+(err.message||err.code);
+    }
+  });
+
+  // Auth state handling + admin check
+  let currentUser = null;
+  let currentUserProfile = null;
+
   auth.onAuthStateChanged(async user => {
+    // Clear any previous
+    currentUser = null;
+    currentUserProfile = null;
+
     if (!user) {
-      // not logged in — redirect to login page or show message
-      $('adminStatus').textContent = 'Not signed in — please login';
-      // Optionally redirect:
-      // window.location.href = 'login.html';
+      adminStatus.textContent = 'Not signed in — please login';
+      tempBox.style.display = 'block';
+      document.querySelectorAll('.card').forEach(c=>c.style.display='none');
+      $('mainWrap').style.display='none';
       return;
     }
+
+    // Signed in
+    tempBox.style.display = 'none';
     currentUser = user;
-    $('adminStatus').textContent = 'Signed in as ' + (user.email || user.uid);
+    adminStatus.textContent = 'Signed in as ' + (user.email || user.uid);
+
     try {
+      // fetch user profile from users collection
       const profSnap = await db.collection('users').doc(user.uid).get();
       currentUserProfile = profSnap.exists ? profSnap.data() : null;
-      if (!currentUserProfile || !currentUserProfile.isAdmin) {
-        $('adminStatus').textContent = 'Access denied — not an admin';
-        showError('You are not an admin. Ask an admin to set users/{your-uid}.isAdmin = true in Firestore.');
-        // hide UI if not admin
-        document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+
+      if (!currentUserProfile || currentUserProfile.isAdmin !== true) {
+        adminStatus.textContent = 'Access denied — not an admin';
+        showError('You are not an admin. Set users/{your-uid}.isAdmin = true in Firestore.');
+        // hide sensitive UI
+        document.querySelectorAll('.card').forEach(c=>c.style.display='none');
+        $('mainWrap').style.display='none';
         return;
       }
-      // show UI
-      document.querySelectorAll('.card').forEach(c => c.style.display = 'block');
-      initAdminPage(); // load products & orders
-    } catch (err) {
-      console.error('Error fetching user profile', err);
-      showError('Error fetching profile. Check console.');
+
+      // Admin confirmed — show UI
+      adminStatus.textContent = 'Signed in as ' + (user.email || user.uid) + ' (admin)';
+      document.querySelectorAll('.card').forEach(c=>c.style.display='block');
+      $('mainWrap').style.display='block';
+
+      // initialize page data
+      await initAdminPage();
+
+    } catch(err) {
+      console.error('Error checking admin profile',err);
+      showError('Failed to verify admin profile: '+(err.message||err));
     }
   });
 
@@ -244,7 +348,7 @@
    **********************/
   let isEditing = false;
 
-  function resetForm() {
+  function resetForm(){
     $('productId').value = '';
     $('name').value = '';
     $('imageLink').value = '';
@@ -262,30 +366,28 @@
     $('saveBtn').textContent = 'Save Product';
   }
 
-  // Update preview when image link changed
-  $('imageLink').addEventListener('input', (e) => {
+  // preview update
+  $('imageLink').addEventListener('input', (e)=>{
     const url = e.target.value.trim();
     $('previewImg').src = url || '';
   });
 
-  // Submit form (create or update)
-  $('productForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!currentUser || !currentUserProfile || !currentUserProfile.isAdmin) {
+  // product create/update
+  $('productForm').addEventListener('submit', async (ev)=>{
+    ev.preventDefault();
+    if (!currentUser || !currentUserProfile || currentUserProfile.isAdmin !== true) {
       showError('Not authorized');
       return;
     }
 
-    // Validation
     const name = $('name').value.trim();
     const imageLink = $('imageLink').value.trim();
     const sellingPrice = parseFloat($('sellingPrice').value);
     const colorTagsRaw = $('colorTags').value.trim();
-
-    if (!name) { showError('Name is required'); return; }
-    if (!imageLink) { showError('Image link is required'); return; }
-    if (!colorTagsRaw) { showError('Add at least one color tag'); return; }
-    if (!sellingPrice || sellingPrice <= 0) { showError('Selling price must be > 0'); return; }
+    if(!name){ showError('Name required'); return; }
+    if(!imageLink){ showError('Image link required'); return; }
+    if(!colorTagsRaw){ showError('Add at least one color tag'); return; }
+    if(!sellingPrice || sellingPrice <= 0){ showError('Selling price must be > 0'); return; }
 
     const payload = {
       name,
@@ -293,117 +395,102 @@
       originalPrice: Number($('originalPrice').value) || 0,
       sellingPrice: Number($('sellingPrice').value) || 0,
       description: $('description').value.trim() || '',
-      materials: ($('materials').value || '').split(',').map(s => s.trim()).filter(Boolean),
-      colorTags: colorTagsRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
+      materials: ($('materials').value || '').split(',').map(s=>s.trim()).filter(Boolean),
+      colorTags: colorTagsRaw.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean),
       category: $('category').value.trim() || '',
       stock: Number($('stock').value) || 0,
       sku: $('sku').value.trim() || '',
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
     const productId = $('productId').value;
     try {
       if (productId) {
-        // update
         await db.collection('products').doc(productId).update(payload);
         showSuccess('Product updated');
       } else {
-        // create
+        payload.createdAt = firebase.firestore.FieldValue.serverTimestamp();
         const docRef = await db.collection('products').add(payload);
         showSuccess('Product created: ' + docRef.id);
       }
       resetForm();
-      loadProducts(); // refresh
-    } catch (err) {
-      console.error(err);
-      showError('Error saving product: ' + (err.message || err));
+      await loadProducts();
+    } catch(err){
+      console.error('save product error',err);
+      showError('Failed to save product: ' + (err.message || err.code || err));
     }
   });
 
-  $('cancelEdit').addEventListener('click', () => resetForm());
+  $('cancelEdit').addEventListener('click', ()=> resetForm());
 
   /**********************
    * Load products & render
    **********************/
-  async function initAdminPage() {
+  async function initAdminPage(){
     resetForm();
     await loadProducts();
     await loadOrders();
   }
 
-  async function loadProducts() {
-    $('loadingProducts').style.display = 'block';
-    $('productList').innerHTML = '';
+  async function loadProducts(){
+    $('loadingProducts').style.display='block';
+    $('productList').innerHTML='';
     try {
-      const snap = await db.collection('products').orderBy('createdAt', 'desc').limit(200).get();
+      const snap = await db.collection('products').orderBy('createdAt','desc').limit(500).get();
       const items = [];
-      snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-      if (items.length === 0) {
+      snap.forEach(d=> items.push({ id:d.id, ...d.data() }) );
+      if(items.length === 0){
         $('productList').innerHTML = '<div class="muted">No products yet — add one using the form above.</div>';
       } else {
-        for (const p of items) renderProductItem(p);
+        for(const p of items) renderProductItem(p);
       }
-    } catch (err) {
-      console.error('loadProducts', err);
-      showError('Failed to load products');
+    } catch(err){
+      console.error('loadProducts error',err);
+      showError('Failed to load products: ' + (err.message||err));
     } finally {
-      $('loadingProducts').style.display = 'none';
+      $('loadingProducts').style.display='none';
     }
   }
 
-  function renderProductItem(p) {
+  function renderProductItem(p){
     const wrap = document.createElement('div');
-    wrap.className = 'product-item';
+    wrap.className='product-item';
 
     const img = document.createElement('img');
-    img.className = 'product-thumb';
+    img.className='product-thumb';
     img.src = p.imageLink || '';
     img.alt = p.name || 'product';
-    wrap.appendChild(img);
 
-    const meta = document.createElement('div');
-    meta.className = 'product-meta';
+    const meta = document.createElement('div'); meta.className='product-meta';
     const title = document.createElement('div');
     title.innerHTML = '<strong>' + escapeText(p.name) + '</strong> <span class="muted">(' + (p.sku || '-') + ')</span>';
-    const price = document.createElement('div');
-    price.className = 'muted';
-    price.textContent = '₹' + (Number(p.sellingPrice || p.originalPrice || 0)).toFixed(2) + ' • stock: ' + (p.stock || 0);
-    const desc = document.createElement('div');
-    desc.className = 'muted';
+    const price = document.createElement('div'); price.className='muted';
+    price.textContent = '₹' + Number(p.sellingPrice || p.originalPrice || 0).toFixed(2) + ' • stock: ' + (p.stock || 0);
+    const desc = document.createElement('div'); desc.className='muted';
     desc.textContent = (p.description || '').slice(0, 120);
 
-    meta.appendChild(title);
-    meta.appendChild(price);
-    meta.appendChild(desc);
+    meta.appendChild(title); meta.appendChild(price); meta.appendChild(desc);
 
-    const actions = document.createElement('div');
-    actions.className = 'product-actions';
+    const actions = document.createElement('div'); actions.className='product-actions';
+    const editBtn = document.createElement('button'); editBtn.className='small outline'; editBtn.textContent='Edit';
+    editBtn.addEventListener('click', ()=> startEditProduct(p.id));
+    const delBtn = document.createElement('button'); delBtn.className='small danger'; delBtn.textContent='Delete';
+    delBtn.addEventListener('click', ()=> confirmDeleteProduct(p.id, p.name));
 
-    const editBtn = document.createElement('button');
-    editBtn.className = 'small outline';
-    editBtn.textContent = 'Edit';
-    editBtn.addEventListener('click', () => startEditProduct(p.id));
-
-    const delBtn = document.createElement('button');
-    delBtn.className = 'small danger';
-    delBtn.textContent = 'Delete';
-    delBtn.addEventListener('click', () => confirmDeleteProduct(p.id, p.name));
-
-    actions.appendChild(editBtn);
-    actions.appendChild(delBtn);
+    actions.appendChild(editBtn); actions.appendChild(delBtn);
     meta.appendChild(actions);
 
+    wrap.appendChild(img);
     wrap.appendChild(meta);
     $('productList').appendChild(wrap);
   }
 
-  // sanitize text for display (not for DB)
-  function escapeText(s) { return String(s || '').replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; }); }
+  function escapeText(s){ return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
-  async function startEditProduct(productId) {
+  async function startEditProduct(productId){
     try {
       const snap = await db.collection('products').doc(productId).get();
-      if (!snap.exists) { showError('Product not found'); return; }
+      if(!snap.exists){ showError('Product not found'); return; }
       const p = snap.data();
       $('productId').value = productId;
       $('name').value = p.name || '';
@@ -417,61 +504,58 @@
       $('stock').value = p.stock || 0;
       $('sku').value = p.sku || '';
       $('previewImg').src = p.imageLink || '';
-      $('cancelEdit').style.display = 'inline-block';
+      $('cancelEdit').style.display='inline-block';
       isEditing = true;
       $('saveBtn').textContent = 'Update Product';
       window.scrollTo({ top: 120, behavior: 'smooth' });
-    } catch (err) {
-      console.error(err);
-      showError('Error loading product for edit');
+    } catch(err){
+      console.error('startEditProduct error',err);
+      showError('Failed to load product for edit');
     }
   }
 
-  async function confirmDeleteProduct(productId, name) {
-    if (!confirm('Delete product "' + name + '"? This cannot be undone.')) return;
+  async function confirmDeleteProduct(productId, name){
+    if(!confirm('Delete "' + name + '"? This cannot be undone.')) return;
     try {
       await db.collection('products').doc(productId).delete();
       showSuccess('Product deleted');
-      loadProducts();
-    } catch (err) {
-      console.error(err);
-      showError('Failed to delete product');
+      await loadProducts();
+    } catch(err){
+      console.error('delete error',err);
+      showError('Failed to delete product: ' + (err.message || err));
     }
   }
 
   /**********************
    * Orders listing
    **********************/
-  async function loadOrders() {
-    $('loadingOrders').style.display = 'block';
+  async function loadOrders(){
+    $('loadingOrders').style.display='block';
     $('ordersBody').innerHTML = '';
     try {
-      const snap = await db.collection('orders').orderBy('createdAt', 'desc').limit(50).get();
-      if (snap.empty) {
+      const snap = await db.collection('orders').orderBy('createdAt','desc').limit(50).get();
+      if(snap.empty){
         $('ordersBody').innerHTML = '<tr><td colspan="5" class="muted">No orders yet</td></tr>';
       } else {
-        snap.forEach(doc => {
+        snap.forEach(doc=>{
           const o = doc.data();
           const tr = document.createElement('tr');
-          const orderIdCell = `<td>${escapeText(doc.id)}</td>`;
-          const userCell = `<td>${escapeText(o.userId || '-')}</td>`;
-          const amountCell = `<td>₹${Number(o.amount||0).toFixed(2)}</td>`;
-          const statusCell = `<td>${escapeText(o.status||'created')}</td>`;
-          const createdCell = `<td>${o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString() : '-'}</td>`;
-          tr.innerHTML = orderIdCell + userCell + amountCell + statusCell + createdCell;
+          const created = o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString() : '-';
+          tr.innerHTML = `<td>${escapeText(doc.id)}</td><td>${escapeText(o.userEmail || o.userId || '-')}</td><td>₹${Number(o.amount||0).toFixed(2)}</td><td>${escapeText(o.status||'created')}</td><td>${created}</td>`;
           $('ordersBody').appendChild(tr);
         });
       }
-    } catch (err) {
-      console.error('loadOrders', err);
-      showError('Failed to load orders');
+    } catch(err){
+      console.error('loadOrders error',err);
+      showError('Failed to load orders: ' + (err.message||err));
     } finally {
-      $('loadingOrders').style.display = 'none';
+      $('loadingOrders').style.display='none';
     }
   }
 
-  // initial hide of cards until admin check
-  document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+  // quick debug console helpers (you can remove later)
+  console.log('Admin page loaded. Firebase project:', firebaseConfig.projectId);
+  console.log('Open console and watch for auth and firestore messages.');
 
   </script>
 </body>
