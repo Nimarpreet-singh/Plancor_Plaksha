@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plancor — Admin</title>
+  <link rel="stylesheet" href="pagebasics.css"> <!-- reuses your site styles -->
+  <style>
+    /* Admin page tweaks */
+    body { background: var(--secondary-color); padding-top: 90px; }
+    .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 30px; }
+    .admin-header { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px }
+    .admin-title { font-size: 1.6rem; font-weight:700; color:var(--text-color); }
+    .admin-sub { color:var(--text-light); font-size:0.95rem }
+    .card { background: #fff; border-radius:12px; padding:18px; box-shadow: var(--shadow); margin-bottom:18px; }
+    form .row { display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+    input[type=text], input[type=number], textarea { padding:10px; border:1px solid #ddd; border-radius:8px; width:100%; font-family:inherit; }
+    input[type=number] { max-width:220px; }
+    label { font-weight:600; font-size:0.9rem; color:var(--text-color); display:block; margin-bottom:6px; }
+    .btn { background:var(--primary-color); color:#fff; padding:10px 16px; border-radius:8px; cursor:pointer; border:none; font-weight:600; }
+    .btn:disabled { opacity:0.6; cursor:not-allowed; }
+    .muted { color:var(--text-light); font-size:0.9rem; }
+    .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; }
+    .product-item { display:flex; gap:12px; align-items:flex-start; padding:10px; border-radius:8px; border:1px solid #eee; }
+    .product-thumb { width:90px; height:90px; object-fit:cover; border-radius:6px; background:#fafafa; border:1px solid #f0f0f0; }
+    .product-meta { flex:1; }
+    .product-actions { display:flex; gap:8px; margin-top:8px; }
+    .small { font-size:0.85rem; padding:6px 8px; border-radius:6px; border:none; cursor:pointer; }
+    .danger { background:#ff6b6b; color:white; }
+    .outline { background:#fff; border:1px solid #ddd; color:var(--text-color); }
+    .success-msg { padding:10px; background:#e8fbee; color:#176c2f; border-radius:8px; margin-bottom:10px; display:none; }
+    .error-msg { padding:10px; background:#ffecec; color:#a33; border-radius:8px; margin-bottom:10px; display:none; }
+    .orders-table { width:100%; border-collapse:collapse; }
+    .orders-table th, .orders-table td { text-align:left; padding:8px; border-bottom:1px solid #eee; }
+    @media (max-width:780px){ .row { flex-direction:column } input[type=number]{ width:100% } }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" style="position:fixed; top:0; left:0; right:0;">
+    <div class="logo"><h1><span class="eco">Plancor</h1></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="farmer.html">Farmers</a>
+      <a href="sustainability.html">Sustainability</a>
+      <a href="contactus.html">Contact</a>
+    </div>
+    <div style="margin-left:auto; padding-right:22px;">
+      <button id="logoutBtn" class="btn outline" style="background:#fff;color:var(--text-color)">Logout</button>
+    </div>
+  </nav>
+
+  <main class="admin-wrap">
+    <div class="admin-header">
+      <div>
+        <div class="admin-title">Admin — Product Management</div>
+        <div class="admin-sub">Add, edit or remove products. Paste image links (from your image hosting) — do not upload files here.</div>
+      </div>
+      <div style="text-align:right;">
+        <div id="adminStatus" class="muted">Checking auth...</div>
+      </div>
+    </div>
+
+    <div id="alerts">
+      <div id="success" class="success-msg"></div>
+      <div id="error" class="error-msg"></div>
+    </div>
+
+    <section class="card" aria-labelledby="add-product-heading">
+      <h2 id="add-product-heading" style="margin-top:0">Create / Edit Product</h2>
+
+      <form id="productForm" autocomplete="off">
+        <input type="hidden" id="productId" value="">
+        <div class="row">
+          <div style="flex:2; min-width:220px;">
+            <label for="name">Name *</label>
+            <input id="name" type="text" required placeholder="Product name" />
+          </div>
+
+          <div style="flex:1; min-width:200px;">
+            <label for="category">Category</label>
+            <input id="category" type="text" placeholder="e.g., baskets" />
+          </div>
+
+          <div style="flex:1; min-width:200px;">
+            <label for="sku">SKU</label>
+            <input id="sku" type="text" placeholder="SKU / product code" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1;">
+            <label for="imageLink">Image Link * (paste image URL)</label>
+            <input id="imageLink" type="text" placeholder="https://i.postimg.cc/..." required />
+          </div>
+
+          <div style="max-width:220px;">
+            <label for="stock">Stock</label>
+            <input id="stock" type="number" min="0" placeholder="0" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1; min-width:220px;">
+            <label for="originalPrice">Original Price (MRP)</label>
+            <input id="originalPrice" type="number" step="0.01" placeholder="e.g., 4999.00" />
+          </div>
+
+          <div style="flex:1; min-width:220px;">
+            <label for="sellingPrice">Selling Price (charge amount) * </label>
+            <input id="sellingPrice" type="number" step="0.01" placeholder="e.g., 3499.00" required />
+          </div>
+
+          <div style="flex:1; min-width:220px;">
+            <label for="colorTags">Color Tags * (comma separated)</label>
+            <input id="colorTags" type="text" placeholder="beige, brown" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1;">
+            <label for="materials">Materials (comma separated)</label>
+            <input id="materials" type="text" placeholder="rice husk, jute, resin" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1;">
+            <label for="description">Description</label>
+            <textarea id="description" rows="4" placeholder="Short product description"></textarea>
+          </div>
+
+          <div style="width:140px;">
+            <label>Preview</label>
+            <img id="previewImg" class="product-thumb" src="" alt="preview image" style="display:block"/>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <button id="saveBtn" type="submit" class="btn">Save Product</button>
+          <button id="cancelEdit" type="button" class="btn outline" style="margin-left:8px; display:none">Cancel Edit</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="list-heading">
+      <h2 id="list-heading" style="margin-top:0">Products</h2>
+      <div id="productList" class="product-grid" aria-live="polite"></div>
+      <div id="loadingProducts" class="muted" style="margin-top:8px; display:none">Loading products…</div>
+    </section>
+
+    <section class="card" aria-labelledby="orders-heading">
+      <h2 id="orders-heading" style="margin-top:0">Recent Orders</h2>
+      <div id="ordersWrap">
+        <table class="orders-table">
+          <thead>
+            <tr><th>Order ID</th><th>User</th><th>Amount (₹)</th><th>Status</th><th>Created</th></tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+        <div id="loadingOrders" class="muted" style="margin-top:8px; display:none">Loading orders…</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Firebase SDKs - add these first -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+  /**********************
+   *  CONFIG - IMPORTANT
+   *  Replace the firebaseConfig object with your Firebase Web App config
+   *  (Project settings → General → Your apps → Config)
+   **********************/
+  const firebaseConfig = {
+  apiKey: "AIzaSyBYlI1N9gmbUbDaITYMbng1wyjsJrhSvxI",
+  authDomain: "plancor-8bdf8.firebaseapp.com",
+  projectId: "plancor-8bdf8",
+  storageBucket: "plancor-8bdf8.appspot.com",
+  messagingSenderId: "726914292441",
+  appId: "1:726914292441:web:b3d292249649d65f06fcc8",
+  measurementId: "G-GES9JNP4FT"
+};
+
+//   firebase.initializeApp(firebaseConfig);
+//   const auth = firebase.auth();
+//   const db = firebase.firestore();
+
+  /**********************
+   *  Helper UI functions
+   **********************/
+  const $ = id => document.getElementById(id);
+  function showSuccess(msg) { const el = $('success'); el.textContent = msg; el.style.display = 'block'; setTimeout(()=> el.style.display='none', 4000); }
+  function showError(msg) { const el = $('error'); el.textContent = msg; el.style.display = 'block'; setTimeout(()=> el.style.display='none', 6000); }
+
+  /**********************
+   *  Auth / Access control
+   **********************/
+  let currentUser = null;
+  let currentUserProfile = null;
+
+  // Logout button
+  $('logoutBtn').addEventListener('click', async () => {
+    await auth.signOut();
+    window.location.href = 'index.html';
+  });
+
+  // Check auth state
+  auth.onAuthStateChanged(async user => {
+    if (!user) {
+      // not logged in — redirect to login page or show message
+      $('adminStatus').textContent = 'Not signed in — please login';
+      // Optionally redirect:
+      // window.location.href = 'login.html';
+      return;
+    }
+    currentUser = user;
+    $('adminStatus').textContent = 'Signed in as ' + (user.email || user.uid);
+    try {
+      const profSnap = await db.collection('users').doc(user.uid).get();
+      currentUserProfile = profSnap.exists ? profSnap.data() : null;
+      if (!currentUserProfile || !currentUserProfile.isAdmin) {
+        $('adminStatus').textContent = 'Access denied — not an admin';
+        showError('You are not an admin. Ask an admin to set users/{your-uid}.isAdmin = true in Firestore.');
+        // hide UI if not admin
+        document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+        return;
+      }
+      // show UI
+      document.querySelectorAll('.card').forEach(c => c.style.display = 'block');
+      initAdminPage(); // load products & orders
+    } catch (err) {
+      console.error('Error fetching user profile', err);
+      showError('Error fetching profile. Check console.');
+    }
+  });
+
+  /**********************
+   * Admin page logic
+   **********************/
+  let isEditing = false;
+
+  function resetForm() {
+    $('productId').value = '';
+    $('name').value = '';
+    $('imageLink').value = '';
+    $('originalPrice').value = '';
+    $('sellingPrice').value = '';
+    $('description').value = '';
+    $('materials').value = '';
+    $('colorTags').value = '';
+    $('category').value = '';
+    $('stock').value = '';
+    $('sku').value = '';
+    $('previewImg').src = '';
+    $('cancelEdit').style.display = 'none';
+    isEditing = false;
+    $('saveBtn').textContent = 'Save Product';
+  }
+
+  // Update preview when image link changed
+  $('imageLink').addEventListener('input', (e) => {
+    const url = e.target.value.trim();
+    $('previewImg').src = url || '';
+  });
+
+  // Submit form (create or update)
+  $('productForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!currentUser || !currentUserProfile || !currentUserProfile.isAdmin) {
+      showError('Not authorized');
+      return;
+    }
+
+    // Validation
+    const name = $('name').value.trim();
+    const imageLink = $('imageLink').value.trim();
+    const sellingPrice = parseFloat($('sellingPrice').value);
+    const colorTagsRaw = $('colorTags').value.trim();
+
+    if (!name) { showError('Name is required'); return; }
+    if (!imageLink) { showError('Image link is required'); return; }
+    if (!colorTagsRaw) { showError('Add at least one color tag'); return; }
+    if (!sellingPrice || sellingPrice <= 0) { showError('Selling price must be > 0'); return; }
+
+    const payload = {
+      name,
+      imageLink,
+      originalPrice: Number($('originalPrice').value) || 0,
+      sellingPrice: Number($('sellingPrice').value) || 0,
+      description: $('description').value.trim() || '',
+      materials: ($('materials').value || '').split(',').map(s => s.trim()).filter(Boolean),
+      colorTags: colorTagsRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
+      category: $('category').value.trim() || '',
+      stock: Number($('stock').value) || 0,
+      sku: $('sku').value.trim() || '',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    const productId = $('productId').value;
+    try {
+      if (productId) {
+        // update
+        await db.collection('products').doc(productId).update(payload);
+        showSuccess('Product updated');
+      } else {
+        // create
+        const docRef = await db.collection('products').add(payload);
+        showSuccess('Product created: ' + docRef.id);
+      }
+      resetForm();
+      loadProducts(); // refresh
+    } catch (err) {
+      console.error(err);
+      showError('Error saving product: ' + (err.message || err));
+    }
+  });
+
+  $('cancelEdit').addEventListener('click', () => resetForm());
+
+  /**********************
+   * Load products & render
+   **********************/
+  async function initAdminPage() {
+    resetForm();
+    await loadProducts();
+    await loadOrders();
+  }
+
+  async function loadProducts() {
+    $('loadingProducts').style.display = 'block';
+    $('productList').innerHTML = '';
+    try {
+      const snap = await db.collection('products').orderBy('createdAt', 'desc').limit(200).get();
+      const items = [];
+      snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+      if (items.length === 0) {
+        $('productList').innerHTML = '<div class="muted">No products yet — add one using the form above.</div>';
+      } else {
+        for (const p of items) renderProductItem(p);
+      }
+    } catch (err) {
+      console.error('loadProducts', err);
+      showError('Failed to load products');
+    } finally {
+      $('loadingProducts').style.display = 'none';
+    }
+  }
+
+  function renderProductItem(p) {
+    const wrap = document.createElement('div');
+    wrap.className = 'product-item';
+
+    const img = document.createElement('img');
+    img.className = 'product-thumb';
+    img.src = p.imageLink || '';
+    img.alt = p.name || 'product';
+    wrap.appendChild(img);
+
+    const meta = document.createElement('div');
+    meta.className = 'product-meta';
+    const title = document.createElement('div');
+    title.innerHTML = '<strong>' + escapeText(p.name) + '</strong> <span class="muted">(' + (p.sku || '-') + ')</span>';
+    const price = document.createElement('div');
+    price.className = 'muted';
+    price.textContent = '₹' + (Number(p.sellingPrice || p.originalPrice || 0)).toFixed(2) + ' • stock: ' + (p.stock || 0);
+    const desc = document.createElement('div');
+    desc.className = 'muted';
+    desc.textContent = (p.description || '').slice(0, 120);
+
+    meta.appendChild(title);
+    meta.appendChild(price);
+    meta.appendChild(desc);
+
+    const actions = document.createElement('div');
+    actions.className = 'product-actions';
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'small outline';
+    editBtn.textContent = 'Edit';
+    editBtn.addEventListener('click', () => startEditProduct(p.id));
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'small danger';
+    delBtn.textContent = 'Delete';
+    delBtn.addEventListener('click', () => confirmDeleteProduct(p.id, p.name));
+
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+    meta.appendChild(actions);
+
+    wrap.appendChild(meta);
+    $('productList').appendChild(wrap);
+  }
+
+  // sanitize text for display (not for DB)
+  function escapeText(s) { return String(s || '').replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; }); }
+
+  async function startEditProduct(productId) {
+    try {
+      const snap = await db.collection('products').doc(productId).get();
+      if (!snap.exists) { showError('Product not found'); return; }
+      const p = snap.data();
+      $('productId').value = productId;
+      $('name').value = p.name || '';
+      $('imageLink').value = p.imageLink || '';
+      $('originalPrice').value = p.originalPrice || '';
+      $('sellingPrice').value = p.sellingPrice || '';
+      $('description').value = p.description || '';
+      $('materials').value = (p.materials || []).join(', ');
+      $('colorTags').value = (p.colorTags || []).join(', ');
+      $('category').value = p.category || '';
+      $('stock').value = p.stock || 0;
+      $('sku').value = p.sku || '';
+      $('previewImg').src = p.imageLink || '';
+      $('cancelEdit').style.display = 'inline-block';
+      isEditing = true;
+      $('saveBtn').textContent = 'Update Product';
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    } catch (err) {
+      console.error(err);
+      showError('Error loading product for edit');
+    }
+  }
+
+  async function confirmDeleteProduct(productId, name) {
+    if (!confirm('Delete product "' + name + '"? This cannot be undone.')) return;
+    try {
+      await db.collection('products').doc(productId).delete();
+      showSuccess('Product deleted');
+      loadProducts();
+    } catch (err) {
+      console.error(err);
+      showError('Failed to delete product');
+    }
+  }
+
+  /**********************
+   * Orders listing
+   **********************/
+  async function loadOrders() {
+    $('loadingOrders').style.display = 'block';
+    $('ordersBody').innerHTML = '';
+    try {
+      const snap = await db.collection('orders').orderBy('createdAt', 'desc').limit(50).get();
+      if (snap.empty) {
+        $('ordersBody').innerHTML = '<tr><td colspan="5" class="muted">No orders yet</td></tr>';
+      } else {
+        snap.forEach(doc => {
+          const o = doc.data();
+          const tr = document.createElement('tr');
+          const orderIdCell = `<td>${escapeText(doc.id)}</td>`;
+          const userCell = `<td>${escapeText(o.userId || '-')}</td>`;
+          const amountCell = `<td>₹${Number(o.amount||0).toFixed(2)}</td>`;
+          const statusCell = `<td>${escapeText(o.status||'created')}</td>`;
+          const createdCell = `<td>${o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString() : '-'}</td>`;
+          tr.innerHTML = orderIdCell + userCell + amountCell + statusCell + createdCell;
+          $('ordersBody').appendChild(tr);
+        });
+      }
+    } catch (err) {
+      console.error('loadOrders', err);
+      showError('Failed to load orders');
+    } finally {
+      $('loadingOrders').style.display = 'none';
+    }
+  }
+
+  // initial hide of cards until admin check
+  document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+
+  </script>
+</body>
+</html>
